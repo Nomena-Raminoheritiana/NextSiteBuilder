@@ -1,0 +1,59 @@
+@import "src/scss/_breakpoints";
+
+.TestimonialAuthorContainer {
+  display:flex;
+  flex-direction: column;
+  margin-top: 24px;
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+  }
+  .TestimonialAuthor--img {
+    border-radius : 9999px;
+    display : block;
+    height : 80px;
+    line-height : 24px;
+    max-width : 100%;
+    min-height : auto;
+    min-width : auto;
+    width : 80px;
+    margin-left:auto;
+    margin-right: auto;
+    @media (min-width: $breakpoint-md) {
+      margin-left:0;
+      margin-right: 0;
+    }
+  }
+  .TestimonialAuthor--contents-container {
+    padding-left: 0;
+    @media (min-width: $breakpoint-md) {
+      padding-left: 31px;
+    }
+    .TestimonialAuthor--contents-author__name {
+      color : #1976d2;
+      display : block;
+      font-size : 30px;
+      font-family: 'Arial', serif;
+      font-weight : 600;
+      height : 48.2px;
+      line-height : 45px;
+      margin:0;
+      text-align: center;
+      @media (min-width: $breakpoint-md) {
+        text-align : left;
+      }
+    }
+    .TestimonialAuthor--contents-author__jobTitle {
+      color : #7C8BA1;
+      display : block;
+      font-weight : 500;
+      height : 27.2px;
+      line-height : 24px;
+      margin:0;
+      text-align: center;
+      @media (min-width: $breakpoint-md) {
+        text-align : left;
+      }
+    }
+  }
+}
+

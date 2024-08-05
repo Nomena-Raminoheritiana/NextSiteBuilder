@@ -1,0 +1,31 @@
+@import "src/scss/_breakpoints";
+
+
+.singleTestimonial--container {
+  margin-top : 80px;
+  .testimonialQuote {
+    margin-right: 0.25rem;
+    margin-top: -0.75rem;
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+    --tw-text-opacity: 1;
+    color: rgb(100 21 255 / var(--tw-text-opacity));
+    opacity: 0.75;
+    path {
+      fill: #1976d2
+    }
+  }
+  .singleTestimonial--blockquote {
+    font-size: 1.5rem;
+    color: rgb(36 62 99);
+    line-height: 36px;
+    text-align: center;
+    margin:0px;
+    display: inline;
+    @media (min-width: $breakpoint-md) {
+      text-align: left;
+    }
+
+  }
+}

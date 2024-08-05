@@ -1,0 +1,30 @@
+@keyframes slideLeftToRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRightToLeft {
+  0% {
+    display: block;
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+    display: none;
+  }
+}
+
+.left-toolbar.isOpen {
+  display: block;
+  animation: slideLeftToRight 0.3s ease-out forwards;
+}
+
+.left-toolbar.isClosed {
+  animation: slideRightToLeft 0.3s ease-out forwards;
+}

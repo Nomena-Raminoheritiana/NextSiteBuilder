@@ -1,0 +1,15 @@
+.header-desktop-fixed {
+  display: flex;
+  height: 75px;
+  .header-desktop-fixed__appBar {
+    height: 75px;
+    .header-desktop-fixed__toolBar {
+      height: 75px;
+      padding-left: 74px;
+      padding-right: 74px;
+      .header-desktop-fixed__menu {
+        margin-left:auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import "src/scss/_breakpoints";
+
+.SectionParagraph.priority {
+  margin-top: 16px;
+  text-align: center;
+  color: #7C8BA1;
+  @media (min-width: $breakpoint-md) {
+    text-align: left;
+    font-size: 18px;
+  }
+}

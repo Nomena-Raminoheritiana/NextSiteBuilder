@@ -1,0 +1,55 @@
+{
+    "className": "",
+    "title": "The Diaper Core",
+    "listItems": [
+        {
+            "text": "Exemple list 1",
+            "id" : "1"
+        },
+        {
+            "text": "Exemple list 2",
+            "id" : "2"
+        },
+        {
+            "text": "Exemple list 3",
+            "id" : "3"
+        },
+        {
+            "text": "Exemple list 3",
+            "id" : "3"
+        },
+        {
+            "text": "Exemple list 4",
+            "id" : "4"
+        },
+        {
+            "text": "Exemple list 5",
+            "id" : "5"
+        }
+    ],
+    "link": {
+        "title": "title",
+        "url": "#",
+        "openLink": true
+    },
+    "image": {
+        "title": "Pampers Swaddlers Global SI03",
+        "description": "Pampers Swaddlers Global SI03",
+        "contentType": "image/png",
+        "fileName": "Core_Transparent_V2 1.png",
+        "size": 60782,
+        "url": "https://images.stockcake.com/public/f/5/1/f51fbec8-df47-4b01-82cf-85bbbc82c9eb_large/sushi-chef-working-stockcake.jpg",
+        "width": 300,
+        "height": 200
+    },
+    "descriptions": [
+        {
+            "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "id" : "6"
+        },
+        {
+            "text" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "id" : "7"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+export {default} from './src/Testimonial'
+export * from './src/Testimonial'
+export {default as TestimonialAuthor} from './src/TestimonialAuthor'
+export * from './src/TestimonialAuthor'
+export {default as SingleTestimonial} from './src/SingleTestimonial'
+export * from './src/SingleTestimonial'

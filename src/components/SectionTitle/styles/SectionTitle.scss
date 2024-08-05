@@ -1,0 +1,13 @@
+@import "src/scss/_breakpoints";
+
+.SectionTitle.priority {
+  text-align: center;
+  color: rgb(36, 62, 99);
+  font-weight: bolder;
+  margin-top: 16px;
+  font-size:2rem;
+  @media (min-width: $breakpoint-md) {
+    text-align: left;
+    font-size: 60px;
+  }
+}

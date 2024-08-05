@@ -1,0 +1,17 @@
+{
+  "tags": ["P","BLOCKQUOTE"],
+  "menuItems": [
+    {
+      "muiIcon":  "Edit",
+      "label":  "Edit",
+      "divider": false,
+      "componentToShow" : "TextareaForm"
+    },
+    {
+      "muiIcon":  "Delete",
+      "label":  "Delete",
+      "divider":  true,
+      "componentToShow" : "DeleteConfirmation"
+    }
+  ]
+}

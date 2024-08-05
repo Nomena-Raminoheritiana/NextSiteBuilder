@@ -1,0 +1,18 @@
+@import "src/scss/_breakpoints";
+
+.SectionHeader.priority {
+  .SectionHeader--smallTitle,
+  .SectionHeader--sectionTitle,
+  .SectionHeader--sectionParagraph {
+    text-align: center;
+  }
+}
+.SectionHeader.priority.align-left {
+  .SectionHeader--smallTitle,
+  .SectionHeader--sectionTitle,
+  .SectionHeader--sectionParagraph {
+    @media (min-width: $breakpoint-md) {
+     text-align: left;
+    }
+  }
+}

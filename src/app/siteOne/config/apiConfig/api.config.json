@@ -1,0 +1,7 @@
+{
+  "domain" : "http://127.0.0.1:8000",
+  "urlGet" : "/api/pages/{id}",
+  "urlPut" : "/api/pages/{id}",
+  "urlPatch" : "/api/pages/{id}",
+  "urlPost" :  "/api/pages/"
+}

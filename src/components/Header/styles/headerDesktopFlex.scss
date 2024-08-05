@@ -1,0 +1,34 @@
+.header-desktop-flex {
+  position: absolute;
+  top:0px;
+  left:0px;
+  width: 100vw;
+  .header-desktop-flex__appBar {
+    background: transparent;
+    box-shadow: none;
+    pointer-events: none;
+    .header-desktop-flex__toolBar {
+      padding:0;
+      align-items: normal;
+      .logo-flex {
+        pointer-events: initial;
+      }
+      .header-desktop-flex__menu {
+        pointer-events: initial;
+        padding-top: 26px;
+        margin-left:auto;
+        margin-right:50px;
+        background: #1976d2;
+        height: 54px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-bottom-left-radius: 14%;
+        border-bottom-right-radius: 14%;
+        color: #ffffff;
+        a {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}

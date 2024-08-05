@@ -1,0 +1,18 @@
+{
+  "tags": ["H1","H2","H3","H4","H5","H6"],
+  "menuItems": [
+    {
+      "muiIcon":  "Edit",
+      "label":  "Edit",
+      "divider": false,
+      "redirectToUrl" : "",
+      "componentToShow" : "TextareaForm"
+    },
+    {
+      "muiIcon":  "Delete",
+      "label":  "Delete",
+      "divider":  true,
+      "componentToShow" : "DeleteConfirmation"
+    }
+  ]
+}

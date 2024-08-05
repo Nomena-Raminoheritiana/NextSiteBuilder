@@ -1,0 +1,39 @@
+@import "src/scss/_breakpoints";
+.Testimonial {
+  height: auto;
+  @media (min-width: $breakpoint-md) {
+    height: 582px;
+  }
+  .Testimonial--container-desktop {
+    height: 100%;
+    display: none;
+    @media (min-width: $breakpoint-md) {
+      display: flex;
+    }
+    .Testimonial--contents {
+      padding-right:48px;
+    }
+    .Testimonial--imageCarousel {
+      img {
+        height: 582px !important;
+      }
+    }
+  }
+
+  .Testimonial--container-mobile {
+    @media (min-width: $breakpoint-md) {
+      display: none;
+    }
+    .Testimonial--imageCarousel {
+      width: 100%;
+      img {
+        height: 320px !important;
+      }
+    }
+    .Testimonial--contents_singleTestimonial,
+    .singleTestimonial--container {
+      margin-top: 1rem;
+      padding-bottom:16px;
+    }
+  }
+}

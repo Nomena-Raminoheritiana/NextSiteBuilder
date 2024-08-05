@@ -1,0 +1,31 @@
+@import "src/scss/_breakpoints";
+@import "src/scss/_shape";
+
+.logo-container {
+  max-height: 75px;
+  overflow: hidden;
+  @media (min-width: $breakpoint-md) {
+    max-height: 75px;
+  }
+  img.logo-image {
+    width: auto;
+    max-height: 45px;
+    margin-top:auto;
+    margin-bottom: auto;
+    @media (min-width: $breakpoint-md) {
+      max-height: 65px;
+    }
+  }
+  h6.logo-text {
+    line-height: 1
+  }
+}
+
+.logo-container.center {
+  img.logo-image {
+    margin-left: auto
+  }
+  h6.logo-text {
+    margin-right: auto
+  }
+}
