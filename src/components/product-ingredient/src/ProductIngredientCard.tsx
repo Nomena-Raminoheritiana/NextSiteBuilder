@@ -132,7 +132,7 @@ const ProductIngredientCard: React.FunctionComponent<ProductIngredientCardProps>
                       listItems?.length > 0 &&
                       listItems?.map((item, key) => (
                           <ListItem key={'listItem-'+key}>
-                            <ListItemIcon>
+                            <ListItemIcon className={'product-ingredient-card_Icon-container'}>
                               <AcUnitIcon className={'product-ingredient-card_listIcon'} />
                             </ListItemIcon>
                             <ListItemText
@@ -220,6 +220,9 @@ export const commonStyles = css`
       }
       .product-ingredient-card_listIcon {
         color: #1976d2
+      }
+      .product-ingredient-card_Icon-container {
+        min-width: 36px;
       }
     }
     &.has-link {
