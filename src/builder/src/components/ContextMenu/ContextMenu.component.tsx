@@ -32,7 +32,6 @@ const ContextMenu: React.FC<ParagraphContextMenuProps> = (props) => {
     const handleContextMenu = (event) => {
         event.preventDefault();
         const targetElement:HTMLElement = event.target;
-        console.log('targetElement?.id', targetElement?.id)
         if(tags?.includes(targetElement?.tagName) && ![undefined,'',null].includes(targetElement?.id)) {
             setContextMenu(
                 contextMenu === null

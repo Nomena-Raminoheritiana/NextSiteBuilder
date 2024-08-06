@@ -15,10 +15,18 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
     };
 }
 
+export interface itemData {
+    img : string,
+    title: string,
+    rows?: number,
+    cols?: number,
+    id : string
+}
+
 export interface QuiltedImageListProps extends sxProps {
     className?: string;
     rowHeight?:  number | string;
-    itemData: object[]
+    itemData: itemData[]
 }
 
 
@@ -45,7 +53,7 @@ const QuiltedImageList:React.FC<QuiltedImageListProps> = ({
                             alt={item.title}
                             loading="lazy"
                             className={'MuiImageListItem-img'}
-                            id={item?.id}
+                            id={item.id}
                         />
                     </ImageListItem>
                 ))}

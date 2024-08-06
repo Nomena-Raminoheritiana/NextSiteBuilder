@@ -1,8 +1,9 @@
 import React from 'react';
 
 const componentMap = {
-    TextareaForm: () => import('../../components/Forms/TextareaForm.component'),
-    DeleteConfirmation: () => import('../../components/Forms/DeleteConfirmation.component')
+    TextareaForm: () => import('../../components/Forms/Modal/TextareaForm.component'),
+    DeleteConfirmation: () => import('../../components/Forms/Modal/DeleteConfirmation.component'),
+    ImageForm: () => import('../../components/Forms/Modal/ImageForm.component'),
 };
 
 export const getComponent = (componentName) => {

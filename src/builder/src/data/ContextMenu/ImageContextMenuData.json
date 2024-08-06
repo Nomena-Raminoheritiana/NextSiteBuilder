@@ -1,0 +1,12 @@
+{
+  "tags": ["IMG"],
+  "menuItems": [
+    {
+      "muiIcon":  "Edit",
+      "label":  "Edit Image",
+      "divider": false,
+      "redirectToUrl" : "",
+      "componentToShow" : "ImageForm"
+    }
+  ]
+}

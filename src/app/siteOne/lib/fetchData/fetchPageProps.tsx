@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import apiConfig from '../../config/apiConfig/api.config.json'
 
 
-const fetchPageProps = async (pageId, ) => {
+const fetchPageProps = async (pageId) => {
 
     const requestOptions = {
         method: "GET",
