@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import Footer from './Footer.component';
 import logoImage from "@/components/Logo/assets/logo_exemple_2.png";
 import FacebookIcon from '@mui/icons-material/Facebook';
-import {headerLink} from "@/app/page.partial.props";
+import {headerLink} from "@/app/siteOne/lib/defaultProps/page.partial.props";
 
 const meta = {
     title: 'Components/Footer',
