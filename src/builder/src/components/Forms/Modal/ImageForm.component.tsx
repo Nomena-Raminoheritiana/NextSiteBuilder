@@ -46,6 +46,7 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
     const [urlImagePreview, seturlImagePreview] = useState<string>(targetHtmlElement?.getAttribute('src'));
     const [toogleButtonActive,setToogleButtonActive] = useState<string>('fromUrl');
     const inputTitleRef = useRef();
+    const inputAltRef = useRef();
     const dataContextValue = useContext(DataContext);
 
     useEffect(() => {
@@ -65,8 +66,9 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
                 copyOfDataContext,
                 targetId,
                 {
-                   url: urlImagePreview,
-                   title: inputTitleRef?.current?.value
+                    url: urlImagePreview,
+                    title: inputTitleRef?.current?.value,
+                    alt: inputAltRef?.current?.value
                 }
             )
             if(updated) {
@@ -142,6 +144,7 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
                                         <Box mt={3}>
                                             <TextField onChange={handleChangeInputFromUrl} defaultValue={targetHtmlElement?.getAttribute('src')} fullWidth label="Put image url"  />
                                             <TextField sx={{mt:2}} ref={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
+                                            <TextField sx={{mt:2}} ref={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
                                         </Box>
                                     }
 
