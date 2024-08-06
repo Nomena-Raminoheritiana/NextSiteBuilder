@@ -31,7 +31,7 @@ export default async function Page() {
 
   return (
       <Builder
-          start={true}
+          start={false}
           data={data}
           apiConfig={apiConfig}
           pageId={pageId}
