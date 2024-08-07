@@ -96,7 +96,7 @@ const ProductIngredientCard: React.FunctionComponent<ProductIngredientCardProps>
                 <div className="product-ingredient-card-image">
                   <LazyWrapper className="product-ingredient-card-image-wrapper">
                     <source srcSet={`${image?.url}?fm=webp`} type="image/webp" />
-                    <img src={`${image?.url}`} id={image?.id} alt={image?.description || ''} aria-hidden={true} />
+                    <img {...image} src={`${image?.url}`} id={image?.id} aria-hidden={true} />
                   </LazyWrapper>
                 </div>
             )}
