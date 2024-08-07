@@ -3,5 +3,8 @@
   "urlGet" : "/api/pages/{id}",
   "urlPut" : "/api/pages/{id}",
   "urlPatch" : "/api/pages/{id}",
-  "urlPost" :  "/api/pages/"
+  "urlPost" :  "/api/pages/",
+  "image" : {
+    "urlUpload" : "/api/images/upload"
+  }
 }

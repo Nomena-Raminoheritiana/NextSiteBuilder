@@ -12,6 +12,8 @@ const Image = (
         {...imageProps}
         src={(src || dynamiqueUrl)}
         data-component-name={'Image'}
+        alt={imageProps?.alt || imageProps?.title}
+        title={imageProps?.title || imageProps?.alt}
         id={id}
     /> : <></>
 }

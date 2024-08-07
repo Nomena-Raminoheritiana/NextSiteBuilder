@@ -11,16 +11,27 @@ import {
     ToggleButtonGroup,
     Typography
 } from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import {DataContext} from "@/builder";
 import getId from "@/builder/src/services/getId";
 import styled from "styled-components";
-import updateTextById from "@/builder/src/services/setData/updateTextById";
 import saveData from "@/builder/src/services/saveData/saveData";
 import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlById";
+import getLocalImageUrl from "@/builder/src/Utils/getLocalImageUrl";
+import uploadImage from "@/builder/src/services/upload/UploadImage";
 
 export interface TextareaFormProps {
     targetHtmlElement:HTMLElement;
     handleCloseContextMenu?:() => void;
+}
+
+export type ToogleButtonAlignment = 'fromUrl'|'fromDevice';
+
+interface FileResult {
+    url?: string | null;
+    name?: string | null;
+    file?: File | null
 }
 
 const modalStyle = {
@@ -35,6 +46,18 @@ const modalStyle = {
     zIndex:9999
 };
 
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
+
 const ImageForm: React.FC<TextareaFormProps> = (props) => {
     const {
         targetHtmlElement,
@@ -43,15 +66,21 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
     const [defaultUrlImagePreview] = useState(targetHtmlElement?.getAttribute('src'));
-    const [urlImagePreview, seturlImagePreview] = useState<string>(targetHtmlElement?.getAttribute('src'));
-    const [toogleButtonActive,setToogleButtonActive] = useState<string>('fromUrl');
+    const [image, setImage] = useState<FileResult>({
+        url: targetHtmlElement?.getAttribute('src'),
+        name: null,
+        file: null
+    });
+    const [toogleButtonActive,setToogleButtonActive] = useState<ToogleButtonAlignment>("fromUrl");
+    const [loading, setLoading] =  useState<boolean>(false);
     const inputTitleRef = useRef();
     const inputAltRef = useRef();
+    const inputFileRef = useRef();
     const dataContextValue = useContext(DataContext);
 
     useEffect(() => {
-        targetHtmlElement?.setAttribute('src', urlImagePreview)
-    }, [urlImagePreview])
+        image?.url && targetHtmlElement?.setAttribute('src', image.url);
+    }, [image])
 
 
     const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";
@@ -61,18 +90,31 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
         const pageId = dataContextValue?.pageId;
         const apiConfig = dataContextValue?.apiConfig
         const targetId = getId(targetHtmlElement);
+        const imagePayload = {
+            url: image?.url,
+            title: (inputTitleRef?.current as HTMLInputElement)?.value,
+            alt: (inputTitleRef?.current as HTMLInputElement)?.value
+        }
+        if(toogleButtonActive === 'fromDevice') {
+            if(image?.file && image?.name) {
+                setLoading(true);
+                const response =  await uploadImage(apiConfig, image.file, pageId, targetHtmlElement?.id );
+                if(response) {
+                  imagePayload.url = response.url;
+                }
+                setLoading(false);
+            }
+        }
         if(targetId) {
             const updated = updateImageUrlById(
                 copyOfDataContext,
                 targetId,
-                {
-                    url: urlImagePreview,
-                    title: inputTitleRef?.current?.value,
-                    alt: inputAltRef?.current?.value
-                }
+                imagePayload
             )
             if(updated) {
+                setLoading(true);
                 const saved = await saveData(pageId, apiConfig, copyOfDataContext);
+                setLoading(false);
                 saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }
         }
@@ -86,23 +128,49 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
 
     const handleClose = (saveContent = false) => {
         setIsModalOpen(false);
-        !saveContent && seturlImagePreview(defaultUrlImagePreview);
+        !saveContent && setImage({
+            ...image,
+            url: defaultUrlImagePreview
+        });
         if(!saveContent) targetHtmlElement.textContent = defaultTextContent
         if(handleCloseContextMenu) setTimeout(() => handleCloseContextMenu(), 1000)
     }
 
     const handleChangeToogleButton = (
-        event: React.MouseEvent<HTMLElement>,
-        newAlignment: string,
+        event: React.MouseEvent<HTMLInputElement>,
+        newAlignment: ToogleButtonAlignment,
     ) => {
         setToogleButtonActive(newAlignment);
-        seturlImagePreview(defaultUrlImagePreview);
+        setImage({
+            ...image,
+            url: defaultUrlImagePreview,
+            name: null,
+            file: null
+        });
     };
 
     const handleChangeInputFromUrl = (
-        event: React.MouseEvent<HTMLElement>,
+        event: React.MouseEvent<HTMLInputElement>,
     ) => {
-        seturlImagePreview(event?.target?.value || defaultUrlImagePreview)
+        const inputElement = event?.target as HTMLInputElement
+        setImage({
+            ...image,
+            url: inputElement?.value as string || defaultUrlImagePreview
+        });
+    }
+
+    const handleFileChange = async (
+        event: React.MouseEvent<HTMLInputElement>,
+    ) => {
+        const imageInfo = await getLocalImageUrl(event?.target as HTMLInputElement);
+        if(typeof imageInfo == 'object'){
+            setImage({
+                ...image,
+                url: imageInfo.url as string,
+                name: imageInfo?.name,
+                file: imageInfo?.file
+            });
+        }
     }
 
     return <>
@@ -126,7 +194,10 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
                             <Typography variant={'h6'} sx={{mb:2}}>Modify image</Typography>
                             <Grid container spacing={2} sx={{width:{xs:'95vw', md:'80vw'}}}>
                                 <Grid item xs={12} md={6}>
-                                    <img src={urlImagePreview} className={'original-image'}  alt={'original image'}/>
+                                    {
+                                        image?.url &&
+                                        <img src={image?.url} className={'original-image'} alt={'original image'}/>
+                                    }
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                     <ToggleButtonGroup
@@ -142,15 +213,64 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
                                     {
                                         toogleButtonActive === 'fromUrl' &&
                                         <Box mt={3}>
-                                            <TextField onChange={handleChangeInputFromUrl} defaultValue={targetHtmlElement?.getAttribute('src')} fullWidth label="Put image url"  />
-                                            <TextField sx={{mt:2}} ref={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
-                                            <TextField sx={{mt:2}} ref={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
+                                            <TextField onChange={handleChangeInputFromUrl} defaultValue={image?.url} fullWidth label="Put image url"  />
                                         </Box>
                                     }
 
+                                    {
+                                        toogleButtonActive === 'fromDevice' &&
+                                        <Box mt={3}>
+                                            <Button
+                                                component="label"
+                                                role={undefined}
+                                                variant="contained"
+                                                tabIndex={-1}
+                                                startIcon={<CloudUploadIcon />}
+                                                sx={{
+                                                    backgroundColor: "#28a745"
+                                                }}
+                                            >
+                                                Upload file
+                                                <VisuallyHiddenInput
+                                                    type="file"
+                                                    onChange={handleFileChange}
+                                                    ref={inputFileRef}
+                                                />
+                                            </Button>
+                                            <TextField
+                                                fullWidth disabled
+                                                value={image.name}
+                                                sx={{
+                                                    mt:2
+                                                }}
+                                            />
+                                        </Box>
+                                    }
+                                    <Box sx={{mt:2}}>
+                                        <TextField sx={{mt:2}} ref={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
+                                        <TextField sx={{mt:4}} ref={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
+                                    </Box>
+
                                     <Box mt={3}>
-                                        <Button onClick={onSaveClick}>Save and close</Button>
-                                        <Button onClick={onCancelClick} sx={{color:'red'}}>Cancel</Button>
+                                        <Button
+                                            onClick={onSaveClick}
+                                            variant="contained"
+                                        >
+                                            { loading ?  <>
+                                                <HourglassTopIcon />
+                                                LOADING...
+                                            </> : "Save and close" }
+                                        </Button>
+                                        <Button
+                                            onClick={onCancelClick}
+                                            variant="contained"
+                                            sx={{
+                                                backgroundColor:"#dc3545",
+                                                ml: 2
+                                        }}
+                                        >
+                                            Cancel
+                                        </Button>
                                     </Box>
                                 </Grid>
                             </Grid>
