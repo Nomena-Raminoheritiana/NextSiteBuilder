@@ -1,7 +1,7 @@
 import React, {Suspense, useContext, useRef, useState} from "react"
 import {Backdrop, Box, Button, Fade, Modal, Typography} from "@mui/material";
 import {DataContext} from "@/builder";
-import {data} from "browserslist";
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import updateTextById from "@/builder/src/services/setData/updateTextById";
 import getId from "@/builder/src/services/getId";
 import saveData from "@/builder/src/services/saveData/saveData";
@@ -30,6 +30,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
     } = props
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+    const [loading, setLoading] =  useState<boolean>(false);
 
     const textAreaRef = useRef(null);
     const dataContextValue = useContext(DataContext);
@@ -47,9 +48,11 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
                 copyOfDataContext,
                 targetId,
                 textAreaRef.current.value
-            )
+           )
             if(updated) {
+              setLoading(true);
               const saved = await saveData(pageId, apiConfig, copyOfDataContext);
+              setLoading(false);
               saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }
         }
@@ -96,8 +99,27 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
                             ref={textAreaRef}
                         >
                         </textarea>
-                        <Button onClick={onSaveClick}>Save and close</Button>
-                        <Button onClick={onCancelClick} sx={{color:'red'}}>Cancel</Button>
+                        <Box mt={3}>
+                            <Button
+                                onClick={onSaveClick}
+                                variant="contained"
+                            >
+                                { loading ?  <>
+                                    <HourglassTopIcon />
+                                    LOADING...
+                                </> : "Save and close" }
+                            </Button>
+                            <Button
+                                onClick={onCancelClick}
+                                variant="contained"
+                                sx={{
+                                    backgroundColor:"#dc3545",
+                                    ml: 2
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                        </Box>
                     </Suspense>
                 </Box>
             </Fade>
