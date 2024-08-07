@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import MainContextMenu from "@/builder/src/components/ContextMenu/MainContextMenu.component";
-import React, {createContext, SetStateAction, useState} from "react";
+import React, {createContext, SetStateAction, useMemo, useState} from "react";
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 
 interface DataContextInterface {
@@ -46,12 +46,13 @@ const Builder:React.FC<BuilderProps> = (props) => {
     }
 
     if(start) {
-       import('./styles/_hoverElements.scss');
-       const HoverImageBorder = dynamic(() => import('./src/components/HoverElement/HoverImageBorder'), {ssr: false});
+        useMemo(() => import('./styles/_hoverElements.scss'), []);
+        const HoverImageBorderMemo = useMemo(() => dynamic(() => import('./src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
+        const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
         return <>
             <DataContext.Provider value={dataContextValue}>
-                {start && <HoverImageBorder />}
-                {start && <MainContextMenu />}
+                <HoverImageBorderMemo />
+                {MainContextMenuMemo}
                 {children}
             </DataContext.Provider>
         </>
