@@ -93,7 +93,7 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
         const imagePayload = {
             url: image?.url,
             title: (inputTitleRef?.current as HTMLInputElement)?.value,
-            alt: (inputTitleRef?.current as HTMLInputElement)?.value
+            alt: (inputAltRef?.current as HTMLInputElement)?.value
         }
         if(toogleButtonActive === 'fromDevice') {
             if(image?.file && image?.name) {
@@ -247,8 +247,8 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
                                         </Box>
                                     }
                                     <Box sx={{mt:2}}>
-                                        <TextField sx={{mt:2}} ref={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
-                                        <TextField sx={{mt:4}} ref={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
+                                        <TextField sx={{mt:2}} inputRef={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
+                                        <TextField sx={{mt:4}} inputRef={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
                                     </Box>
 
                                     <Box mt={3}>
