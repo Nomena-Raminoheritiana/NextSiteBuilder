@@ -173,6 +173,20 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
         }
     }
 
+    const handleAltChange = (
+        event: React.MouseEvent<HTMLInputElement>
+    ) => {
+        const alt = (event?.target as HTMLInputElement).value;
+        alt && targetHtmlElement?.setAttribute('alt', alt);
+    }
+
+    const handleTitleChange = (
+        event: React.MouseEvent<HTMLInputElement>
+    ) => {
+        const title = (event?.target as HTMLInputElement).value;
+        title && targetHtmlElement?.setAttribute('title', title);
+    }
+
     return <>
         <Modal
             aria-labelledby="transition-modal-title"
@@ -247,8 +261,8 @@ const ImageForm: React.FC<TextareaFormProps> = (props) => {
                                         </Box>
                                     }
                                     <Box sx={{mt:2}}>
-                                        <TextField sx={{mt:2}} inputRef={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
-                                        <TextField sx={{mt:4}} inputRef={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
+                                        <TextField sx={{mt:2}} onChange={handleTitleChange} inputRef={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
+                                        <TextField sx={{mt:4}} onChange={handleAltChange} inputRef={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
                                     </Box>
 
                                     <Box mt={3}>
