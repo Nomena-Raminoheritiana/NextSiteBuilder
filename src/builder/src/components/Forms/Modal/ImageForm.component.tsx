@@ -302,6 +302,8 @@ const StyledWrapper = styled.div<{ className: string }>`
     width:100%;
     max-height:550px;
     object-fit: cover;
+    box-shadow: 0 0 55px 555px #7C8BA1 inset;
+    border-radius: 5px
   }
   
 `;
