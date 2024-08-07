@@ -17,7 +17,7 @@ const defaultCursorElementInfoProps = {
 }
 
 const HoverImageBorder = () => {
-    const [cursorElementInfo, setCursorElementInfo] = useState<ElementInfo|null>(null);
+    const [cursorElementInfo, setCursorElementInfo] = useState<ElementInfo>(defaultCursorElementInfoProps);
     useEffect(() => {
         const interval = setInterval(() => {
             const imageElements = document.querySelectorAll('img');
@@ -26,9 +26,9 @@ const HoverImageBorder = () => {
                     image.dataset['mouseover'] = String(true);
                     image.addEventListener('mouseover', (e) => {
                        const imageInfo = getElementInfo(image);
-                       if(imageInfo) {
+                       if(imageInfo != null) {
                            setCursorElementInfo({
-                               ...imageInfo,
+                               ...cursorElementInfo,
                                top: imageInfo.top +  window.scrollY,
                                left: imageInfo.left + window.scrollX,
                                width: imageInfo.width - 1,
@@ -56,7 +56,7 @@ const HoverImageBorder = () => {
     })
    return <>
        {
-           cursorElementInfo &&
+           cursorElementInfo.display !== 'none' &&
            <Box sx={{
                display: cursorElementInfo.display,
                top: cursorElementInfo.top,

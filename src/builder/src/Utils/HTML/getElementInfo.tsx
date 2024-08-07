@@ -19,20 +19,6 @@ export default function getElementInfo(element: HTMLElement):ElementInfo|null {
     // Utilise getBoundingClientRect pour obtenir les informations
     const rect = element.getBoundingClientRect();
     const style = window.getComputedStyle(element);
-
-    console.log(
-        {
-            top: rect.top,
-            right: rect.right,
-            bottom: rect.bottom,
-            left: rect.left,
-            width: rect.width,
-            height: rect.height,
-            x: rect.x,
-            y: rect.y,
-            display: style.display
-        }
-    )
     // Retourne les informations pertinentes
     return {
         top: rect.top,
