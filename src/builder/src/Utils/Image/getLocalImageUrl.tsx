@@ -1,4 +1,4 @@
-import isImage from "@/builder/src/Utils/isImage";
+import isImage from "@/builder/src/Utils/Image/isImage";
 
 interface FileResult {
     url: string;

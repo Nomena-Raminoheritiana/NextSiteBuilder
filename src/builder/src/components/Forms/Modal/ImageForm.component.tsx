@@ -18,7 +18,7 @@ import getId from "@/builder/src/services/getId";
 import styled from "styled-components";
 import saveData from "@/builder/src/services/saveData/saveData";
 import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlById";
-import getLocalImageUrl from "@/builder/src/Utils/getLocalImageUrl";
+import getLocalImageUrl from "@/builder/src/Utils/Image/getLocalImageUrl";
 import uploadImage from "@/builder/src/services/upload/UploadImage";
 
 export interface TextareaFormProps {
