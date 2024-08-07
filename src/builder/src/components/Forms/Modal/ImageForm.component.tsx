@@ -21,7 +21,7 @@ import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlByI
 import getLocalImageUrl from "@/builder/src/Utils/Image/getLocalImageUrl";
 import uploadImage from "@/builder/src/services/upload/UploadImage";
 
-export interface TextareaFormProps {
+export interface ImageFormProps {
     targetHtmlElement:HTMLElement;
     handleCloseContextMenu?:() => void;
 }
@@ -58,7 +58,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-const ImageForm: React.FC<TextareaFormProps> = (props) => {
+const ImageForm: React.FC<ImageFormProps> = (props) => {
     const {
         targetHtmlElement,
         handleCloseContextMenu
