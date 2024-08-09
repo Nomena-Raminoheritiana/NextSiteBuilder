@@ -5,5 +5,6 @@ export default interface ApiConfigInterface {
         "uploadEndpoint": string;
         "deleteEndpoint": string
     },
-    "loginEndpoint" : string
+    "loginEndpoint" : string,
+    "tokenVerificationEndpoint" : string
 }

@@ -1,7 +1,7 @@
 import React, {Suspense, useEffect, useRef, useState} from "react"
-import {Backdrop, Box, Button, Fade, Modal, TextField, Typography} from "@mui/material";
+import {Alert, AlertTitle, Backdrop, Box, Button, Fade, Modal, TextField, Typography} from "@mui/material";
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
-import Login from "@/builder/src/services/apiCall/login/Login";
+import Login from "@/builder/src/services/apiCall/authentication/Login";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 
 const modalStyle = {
@@ -17,14 +17,17 @@ const modalStyle = {
 };
 
 interface LoginFormInterface {
-    apiConfig: ApiConfigInterface
+    apiConfig: ApiConfigInterface;
+    onLoginSuccess: (token:string) => void
 }
 
 const LoginForm: React.FC<LoginFormInterface> = ({
-    apiConfig
+    apiConfig,
+    onLoginSuccess
                                                  }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [loading, setLoading] =  useState<boolean>(false);
+    const [isLoginFailed, setIsLoginFailed] = useState<boolean>(false);
     const inputUsernameRef = useRef<HTMLInputElement>();
     const inputPasswordRef = useRef<HTMLInputElement>();
 
@@ -53,13 +56,18 @@ const LoginForm: React.FC<LoginFormInterface> = ({
     const onLogin = async (e) => {
         e.preventDefault();
         setLoading(true)
-        const isLogged = await Login(
+        const token = await Login(
             apiConfig,
             inputUsernameRef?.current?.value as string,
             inputPasswordRef?.current?.value as string
         );
         setLoading(false)
-        setIsModalOpen(false)
+        if(!token) {
+            setIsLoginFailed(true)
+        } else {
+            handleClose();
+            onLoginSuccess(token as string);
+        }
     }
 
     const onCancelClick = (e) => {
@@ -67,8 +75,9 @@ const LoginForm: React.FC<LoginFormInterface> = ({
         handleClose();
     }
 
-    const handleClose = (saveContent = false) => {
+    const handleClose = () => {
         setIsModalOpen(false);
+        setIsLoginFailed(false)
     }
 
     return <>
@@ -91,6 +100,11 @@ const LoginForm: React.FC<LoginFormInterface> = ({
                         <Typography variant={'h6'} sx={{textAlign:'left'}}>
                             Login
                         </Typography>
+                        { isLoginFailed &&
+                            <Alert sx={{mt:2}} variant="outlined" severity="error">
+                                Error : Bad credentials
+                            </Alert>
+                        }
                         <Box>
                             <TextField sx={{mt:2}}  inputRef={inputUsernameRef}  fullWidth label="Enter your email adress" />
                             <TextField sx={{mt:2}}  inputRef={inputPasswordRef}  fullWidth label="password" type={"password"} />
