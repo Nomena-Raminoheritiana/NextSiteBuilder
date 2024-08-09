@@ -4,5 +4,6 @@
   "image" : {
     "uploadEndpoint" : "/api/images",
     "deleteEndpoint" : "/api/images/{idFromFront}"
-  }
+  },
+  "loginEndpoint" : "/login"
 }

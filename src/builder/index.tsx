@@ -5,6 +5,7 @@ import MainContextMenu from "@/builder/src/components/ContextMenu/MainContextMen
 import React, {createContext, useMemo, useState} from "react";
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 import {Box} from "@mui/material";
+import LoginForm from "@/builder/src/components/Forms/Modal/LoginForm.component";
 
 interface DataContextInterface {
     dataContext?: Record<string, any>;
@@ -71,6 +72,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
         </>
     }
     return <>
+        <LoginForm apiConfig={apiConfig} />
         {children}
     </>
 }

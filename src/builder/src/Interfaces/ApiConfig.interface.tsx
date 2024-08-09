@@ -4,5 +4,6 @@ export default interface ApiConfigInterface {
     "image" : {
         "uploadEndpoint": string;
         "deleteEndpoint": string
-    }
+    },
+    "loginEndpoint" : string
 }
