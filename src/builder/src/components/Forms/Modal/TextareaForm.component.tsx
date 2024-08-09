@@ -40,8 +40,8 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
     const onSaveClick = async (e) => {
         e.preventDefault();
         const copyOfDataContext = {...dataContextValue?.dataContext};
-        const pageId = dataContextValue?.pageId;
-        const apiConfig = dataContextValue?.apiConfig
+        const pageId = dataContextValue.pageId;
+        const apiConfig = dataContextValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
            const updated = updateTextById(

@@ -39,8 +39,8 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
         e.preventDefault();
         const copyOfDataContext = {...dataContextValue?.dataContext};
         console.log(copyOfDataContext)
-        const pageId = dataContextValue?.pageId;
-        const apiConfig = dataContextValue?.apiConfig
+        const pageId = dataContextValue.pageId;
+        const apiConfig = dataContextValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
             console.log('ato')

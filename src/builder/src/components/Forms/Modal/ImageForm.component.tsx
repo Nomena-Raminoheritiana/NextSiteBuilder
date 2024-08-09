@@ -20,6 +20,7 @@ import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlById";
 import getLocalImageUrl from "@/builder/src/Utils/Image/getLocalImageUrl";
 import uploadImage from "@/builder/src/services/apiCall/image/UploadImage";
+import deleteImage from "@/builder/src/services/apiCall/image/DeleteImage";
 
 export interface ImageFormProps {
     targetHtmlElement:HTMLElement;
@@ -88,13 +89,14 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         e.preventDefault();
         const copyOfDataContext = {...dataContextValue?.dataContext};
         const pageId = dataContextValue?.pageId;
-        const apiConfig = dataContextValue?.apiConfig
+        const apiConfig = dataContextValue.apiConfig
         const targetId = getId(targetHtmlElement);
         const imagePayload = {
             url: image?.url,
             title: (inputTitleRef?.current as HTMLInputElement)?.value,
             alt: (inputAltRef?.current as HTMLInputElement)?.value
         }
+        await deleteImage(apiConfig, pageId, targetHtmlElement?.id);
         if(toogleButtonActive === 'fromDevice') {
             if(image?.file && image?.name) {
                 setLoading(true);
@@ -104,8 +106,6 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
                 }
                 setLoading(false);
             }
-        } else {
-
         }
         if(targetId) {
             const updated = updateImageUrlById(
@@ -116,7 +116,6 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
             if(updated) {
                 setLoading(true);
                 const saved = await savePageProps(pageId, apiConfig, copyOfDataContext);
-                console.log(copyOfDataContext);
                 setLoading(false);
                 saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }

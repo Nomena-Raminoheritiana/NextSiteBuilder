@@ -1,8 +1,8 @@
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 
 const savePageProps = async (
-    pageId:number,
-    apiConfig:ApiConfigInterface,
+    pageId: string | null | undefined,
+    apiConfig: ApiConfigInterface,
     newData
 ) => {
 

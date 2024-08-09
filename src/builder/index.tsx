@@ -2,27 +2,36 @@
 
 import dynamic from "next/dynamic";
 import MainContextMenu from "@/builder/src/components/ContextMenu/MainContextMenu.component";
-import React, {createContext, SetStateAction, useMemo, useState} from "react";
+import React, {createContext, useMemo, useState} from "react";
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 
 interface DataContextInterface {
-    dataContext?: Record<string, any>,
+    dataContext?: Record<string, any>;
     setDataContext?: React.Dispatch<React.SetStateAction<Record<string, any>>>;
-    apiConfig?: Record<string, any> | null,
+    apiConfig: ApiConfigInterface;
     pageId?: string | null
 }
+
+const defaultApiConfig: ApiConfigInterface = {
+    domain: '',
+    mainPageEndpoint: '',
+    image: {
+        uploadEndpoint: '',
+        deleteEndpoint: ''
+    }
+};
 
 export const DataContext = createContext<DataContextInterface>({
     dataContext : {},
     setDataContext : () => {},
-    apiConfig : null,
+    apiConfig : defaultApiConfig,
     pageId: null
 });
 
 interface BuilderProps {
     start ?: boolean;
     data ?: object;
-    apiConfig?: ApiConfigInterface,
+    apiConfig : ApiConfigInterface,
     pageId?: number
 }
 
@@ -37,7 +46,6 @@ const Builder:React.FC<BuilderProps> = (props) => {
     } = props
 
     const [dataContext, setDataContext] = useState(data)
-
     const dataContextValue = {
         dataContext,
         setDataContext,
