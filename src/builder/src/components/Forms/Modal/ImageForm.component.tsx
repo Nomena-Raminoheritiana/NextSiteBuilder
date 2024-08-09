@@ -255,7 +255,7 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
                                             </Button>
                                             <TextField
                                                 fullWidth disabled
-                                                value={image.name}
+                                                value={image.name || ''}
                                                 sx={{
                                                     mt:2
                                                 }}
