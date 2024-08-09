@@ -4,7 +4,7 @@ import {DataContext} from "@/builder";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import updateTextById from "@/builder/src/services/setData/updateTextById";
 import getId from "@/builder/src/services/getId";
-import saveData from "@/builder/src/services/saveData/saveData";
+import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 
 export interface TextareaFormProps {
     targetHtmlElement:HTMLElement;
@@ -51,7 +51,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
            )
             if(updated) {
               setLoading(true);
-              const saved = await saveData(pageId, apiConfig, copyOfDataContext);
+              const saved = await savePageProps(pageId, apiConfig, copyOfDataContext);
               setLoading(false);
               saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }

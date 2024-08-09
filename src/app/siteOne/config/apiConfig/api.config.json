@@ -5,6 +5,6 @@
   "urlPatch" : "/api/pages/{id}",
   "urlPost" :  "/api/pages/",
   "image" : {
-    "urlUpload" : "/api/images/upload"
+    "urlUpload" : "/api/images"
   }
 }

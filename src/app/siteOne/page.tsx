@@ -10,7 +10,6 @@ import {BannerWithTwoColumns} from "@/components/Banner";
 import {Container, Divider} from "@mui/material";
 import QuiltedImageList from "@/components/QuiltedImage";
 import Testimonial from "@/components/Testimonial";
-import useIsMobile from "@/Hooks/useIsMobile.hook";
 import Faqs from "@/components/Faqs";
 import Footer from "@/components/Footer";
 import Builder from "@/builder";

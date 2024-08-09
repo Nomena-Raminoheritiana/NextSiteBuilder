@@ -16,10 +16,10 @@ import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import {DataContext} from "@/builder";
 import getId from "@/builder/src/services/getId";
 import styled from "styled-components";
-import saveData from "@/builder/src/services/saveData/saveData";
+import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlById";
 import getLocalImageUrl from "@/builder/src/Utils/Image/getLocalImageUrl";
-import uploadImage from "@/builder/src/services/upload/UploadImage";
+import uploadImage from "@/builder/src/services/apiCall/image/UploadImage";
 
 export interface ImageFormProps {
     targetHtmlElement:HTMLElement;
@@ -104,6 +104,8 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
                 }
                 setLoading(false);
             }
+        } else {
+
         }
         if(targetId) {
             const updated = updateImageUrlById(
@@ -113,7 +115,8 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
             )
             if(updated) {
                 setLoading(true);
-                const saved = await saveData(pageId, apiConfig, copyOfDataContext);
+                const saved = await savePageProps(pageId, apiConfig, copyOfDataContext);
+                console.log(copyOfDataContext);
                 setLoading(false);
                 saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }

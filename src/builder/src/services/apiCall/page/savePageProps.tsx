@@ -1,6 +1,6 @@
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 
-const saveData = async (
+const savePageProps = async (
     pageId:number,
     apiConfig:ApiConfigInterface,
     newData
@@ -29,4 +29,4 @@ const saveData = async (
     return result.json()
 }
 
-export default saveData;
+export default savePageProps;

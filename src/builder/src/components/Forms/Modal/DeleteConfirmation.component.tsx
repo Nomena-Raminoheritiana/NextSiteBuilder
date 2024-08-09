@@ -2,7 +2,7 @@ import React, {Suspense, useContext, useRef, useState} from "react"
 import {Backdrop, Box, Button, Fade, Modal, Typography} from "@mui/material";
 import {DataContext} from "@/builder";
 import getId from "@/builder/src/services/getId";
-import saveData from "@/builder/src/services/saveData/saveData";
+import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import deleteElementById from "@/builder/src/services/setData/deleteElementById";
 
 export interface TextareaFormProps {
@@ -51,7 +51,7 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
             console.log('deleted ', deleted)
             console.log(copyOfDataContext)
             if(deleted) {
-               const saved = await saveData(pageId, apiConfig, copyOfDataContext);
+               const saved = await savePageProps(pageId, apiConfig, copyOfDataContext);
                saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }
         }
