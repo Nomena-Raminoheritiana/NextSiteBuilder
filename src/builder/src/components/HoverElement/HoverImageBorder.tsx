@@ -20,7 +20,7 @@ const HoverImageBorder = () => {
     const [cursorElementInfo, setCursorElementInfo] = useState<ElementInfo>(defaultCursorElementInfoProps);
     useEffect(() => {
         const interval = setInterval(() => {
-            const imageElements = document.querySelectorAll('img');
+            const imageElements = document.querySelectorAll('.builder-children img');
             imageElements.forEach((image:HTMLImageElement) => {
                 if(!image.dataset['mouseover']) {
                     image.dataset['mouseover'] = String(true);

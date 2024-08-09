@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import MainContextMenu from "@/builder/src/components/ContextMenu/MainContextMenu.component";
 import React, {createContext, useMemo, useState} from "react";
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
+import {Box} from "@mui/material";
 
 interface DataContextInterface {
     dataContext?: Record<string, any>;
@@ -59,9 +60,13 @@ const Builder:React.FC<BuilderProps> = (props) => {
         const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
         return <>
             <DataContext.Provider value={dataContextValue}>
-                <HoverImageBorderMemo />
-                {MainContextMenuMemo}
-                {children}
+                <Box className={"builder-container"}>
+                    <HoverImageBorderMemo />
+                    {MainContextMenuMemo}
+                </Box>
+                <Box className={"builder-children"}>
+                    {children}
+                </Box>
             </DataContext.Provider>
         </>
     }
