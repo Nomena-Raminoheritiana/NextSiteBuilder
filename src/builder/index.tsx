@@ -55,6 +55,9 @@ const Builder:React.FC<BuilderProps> = (props) => {
 
     const [dataContext, setDataContext] = useState(data)
     const [token, setToken] = useState<string>(null);
+    const builderHoverElement = useMemo(() => import('./styles/_hoverElements.scss'), []);
+    const HoverImageBorderMemo = useMemo(() => dynamic(() => import('./src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
+    const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
     const dataContextValue = {
         dataContext,
         setDataContext,
@@ -72,10 +75,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
     }, [])
 
     if(token || manualStart) {
-        useMemo(() => import('./styles/_hoverElements.scss'), []);
-        const HoverImageBorderMemo = useMemo(() => dynamic(() => import('./src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
-        const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
-        return <>
+         return <>
             <DataContext.Provider value={dataContextValue}>
                 <Box className={"builder-container"}>
                     <HoverImageBorderMemo />
