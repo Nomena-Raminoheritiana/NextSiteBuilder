@@ -12,7 +12,7 @@ const fetchPageProps = async (pageId) => {
         redirect: 'follow'
     };
 
-    const pagePropsUrl = apiConfig.urlGet.replace('{id}', pageId)
+    const pagePropsUrl = `${apiConfig.mainPageEndpoint}/${pageId}`
     const result = await fetch(apiConfig.domain + pagePropsUrl, requestOptions);
     if (result.status !== 200) {
         console.log('Error when getting page props from '+ apiConfig.domain + pagePropsUrl);

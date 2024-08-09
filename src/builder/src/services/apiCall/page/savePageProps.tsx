@@ -20,7 +20,7 @@ const savePageProps = async (
         body: JSON.stringify(data)
     };
 
-    const pagePropsUrl = apiConfig.urlPatch.replace('{id}', String(pageId))
+    const pagePropsUrl = `${apiConfig.mainPageEndpoint}/${pageId}`;
     const result = await fetch(apiConfig.domain + pagePropsUrl, requestOptions);
     if (result.status !== 200) {
         console.log('Error when pushing data from '+ apiConfig.domain + pagePropsUrl);
