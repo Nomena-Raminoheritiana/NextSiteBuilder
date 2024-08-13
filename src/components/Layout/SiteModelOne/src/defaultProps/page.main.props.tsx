@@ -5,7 +5,7 @@ import {
     HeaderProps,
     marqueeTextProps, productIngredientCarouselProps, QuiltedImageProps,
     sectionHeaderProps1, sectionHeaderProps2, sectionHeaderProps3, testimonialProps
-} from "@/app/siteOne/lib/defaultProps/page.partial.props";
+} from "@/components/Layout/SiteModelOne/src/defaultProps/page.partial.props";
 
 const pageProps = {
     HeaderProps: {...HeaderProps},

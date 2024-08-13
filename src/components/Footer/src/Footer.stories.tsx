@@ -32,7 +32,12 @@ export const footer: Story = {
                 id: '97'
             }
         },
-        navItems : headerLink,
+        navItems : [
+            {url: '/url1', label:'Lien 1', id: 'link1'},
+            {url: '/url2', label:'Lien 2', id: 'link2'},
+            {url: '/url3', label:'Lien 3', id: 'link3'},
+            {url: '/url4', label:'Lien 4', id: 'link4'},
+        ],
         socialLinks : [
             {
                 icon : {
