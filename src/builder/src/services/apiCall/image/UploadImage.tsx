@@ -1,4 +1,5 @@
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
+import {getTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 
 export default async function uploadImage(apiConfig:ApiConfigInterface, file: File, pageId: string | null | undefined, idFromFront: string) {
     if(pageId && file && idFromFront) {
@@ -11,7 +12,10 @@ export default async function uploadImage(apiConfig:ApiConfigInterface, file: Fi
         try {
             const response = await fetch(`${apiConfig?.domain}${apiConfig?.image?.uploadEndpoint}`, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${getTokenFromLS()}`
+                }
             });
             if (!response.ok) {
                 return false;

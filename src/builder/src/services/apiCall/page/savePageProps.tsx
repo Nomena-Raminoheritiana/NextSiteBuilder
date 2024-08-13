@@ -1,4 +1,5 @@
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
+import {getTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 
 const savePageProps = async (
     pageId: string | null | undefined,
@@ -14,7 +15,8 @@ const savePageProps = async (
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${getTokenFromLS()}`
         },
         redirect: 'follow',
         body: JSON.stringify(data)
