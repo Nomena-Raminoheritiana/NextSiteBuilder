@@ -1,6 +1,6 @@
 import React, {Suspense, useContext, useRef, useState} from "react"
 import {Backdrop, Box, Button, Fade, Modal, Typography} from "@mui/material";
-import {DataContext} from "@/builder";
+import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import updateTextById from "@/builder/src/services/setData/updateTextById";
 import getId from "@/builder/src/services/getId";
@@ -33,7 +33,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
     const [loading, setLoading] =  useState<boolean>(false);
 
     const textAreaRef = useRef(null);
-    const dataContextValue = useContext(DataContext);
+    const dataContextValue = useContext(BuilderContext);
 
 
     const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";

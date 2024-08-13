@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import {DataContext} from "@/builder";
+import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/services/getId";
 import styled from "styled-components";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
@@ -77,7 +77,7 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
     const inputTitleRef = useRef();
     const inputAltRef = useRef();
     const inputFileRef = useRef();
-    const dataContextValue = useContext(DataContext);
+    const dataContextValue = useContext(BuilderContext);
 
     useEffect(() => {
         image?.url && targetHtmlElement?.setAttribute('src', image.url);

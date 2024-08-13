@@ -1,6 +1,6 @@
 import React, {Suspense, useContext, useRef, useState} from "react"
 import {Backdrop, Box, Button, Fade, Modal, Typography} from "@mui/material";
-import {DataContext} from "@/builder";
+import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/services/getId";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import deleteElementById from "@/builder/src/services/setData/deleteElementById";
@@ -31,7 +31,7 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
 
     const textAreaRef = useRef(null);
-    const dataContextValue = useContext(DataContext);
+    const dataContextValue = useContext(BuilderContext);
 
 
     const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";

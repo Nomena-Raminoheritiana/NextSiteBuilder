@@ -1,0 +1,10 @@
+{
+  "domain": "",
+  "mainPageEndpoint": "",
+  "image": {
+    "uploadEndpoint": "",
+    "deleteEndpoint": ""
+  },
+  "loginEndpoint" : "",
+  "tokenVerificationEndpoint": ""
+}
