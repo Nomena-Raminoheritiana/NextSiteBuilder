@@ -12,7 +12,7 @@ import {
     Typography
 } from "@mui/material";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
-import getId from "@/builder/src/services/getId";
+import getId from "@/builder/src/Utils/HTML/getId";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import updateHyperlinkById from "@/builder/src/services/setData/updateHyperlinkById";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';

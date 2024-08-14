@@ -14,7 +14,7 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
-import getId from "@/builder/src/services/getId";
+import getId from "@/builder/src/Utils/HTML/getId";
 import styled from "styled-components";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlById";

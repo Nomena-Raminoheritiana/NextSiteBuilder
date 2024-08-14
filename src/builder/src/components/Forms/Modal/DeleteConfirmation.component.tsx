@@ -1,7 +1,7 @@
 import React, {Suspense, useContext, useRef, useState} from "react"
 import {Backdrop, Box, Button, Fade, Modal, Typography} from "@mui/material";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
-import getId from "@/builder/src/services/getId";
+import getId from "@/builder/src/Utils/HTML/getId";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import deleteElementById from "@/builder/src/services/setData/deleteElementById";
 

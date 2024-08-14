@@ -1,4 +1,4 @@
-import React, {lazy, useState, Suspense} from 'react'
+import React, {lazy, useState} from 'react'
 import {
     Backdrop,
     Box,
