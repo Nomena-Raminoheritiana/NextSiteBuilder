@@ -72,7 +72,7 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
     const handleClose = (saveContent = false) => {
         setIsModalOpen(false);
         if (!saveContent && targetHtmlElement) {
-            getAllElementById(targetHtmlElement?.id, (element) => {
+            getAllElementsById(targetHtmlElement?.id, (element) => {
                 element.textContent = defaultTextContent;
                 element.setAttribute('href', defaultUrl);
             })
