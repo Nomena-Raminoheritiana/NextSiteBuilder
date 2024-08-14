@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body style={{position: 'relative'}}>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
                 {children}
