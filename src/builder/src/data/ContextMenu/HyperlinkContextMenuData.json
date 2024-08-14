@@ -1,0 +1,18 @@
+{
+  "tags": ["A"],
+  "menuItems": [
+    {
+      "muiIcon":  "Edit",
+      "label":  "Edit link",
+      "divider": false,
+      "redirectToUrl" : "",
+      "componentToShow" : "HyperlinkForm"
+    },
+    {
+      "muiIcon":  "Delete",
+      "label":  "Delete",
+      "divider":  true,
+      "componentToShow" : "DeleteConfirmation"
+    }
+  ]
+}
