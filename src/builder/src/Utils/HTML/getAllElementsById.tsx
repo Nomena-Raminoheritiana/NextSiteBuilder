@@ -1,4 +1,4 @@
-export default function getAllElementById(id:string, forEach:((element:HTMLElement, index:number) => void) | null = null ): Array<HTMLElement> | null {
+export default function getAllElementsById(id:string, forEach:((element:HTMLElement, index:number) => void) | null = null ): Array<HTMLElement> | null {
     const elements = document.querySelectorAll(`[id="${id}"]`);
     if (typeof forEach === 'function') {
         elements.forEach((element:HTMLElement, index:number) => {

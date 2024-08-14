@@ -5,7 +5,7 @@ import getId from "@/builder/src/services/getId";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
 import updateHyperlinkById from "@/builder/src/services/setData/updateHyperlinkById";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import getAllElementById from "@/builder/src/Utils/HTML/getAllElementsById";
+import getAllElementsById from "@/builder/src/Utils/HTML/getAllElementsById";
 
 export interface HyperlinkFormProps {
     targetHtmlElement:HTMLElement;
@@ -84,14 +84,14 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
 
     const onChangeLabel = (e:React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
-        getAllElementById(targetHtmlElement?.id, (element) => {
+        getAllElementsById(targetHtmlElement?.id, (element) => {
             element.textContent = (e.target as HTMLInputElement).value
         })
     }
 
     const onChangeUrl = (e:React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
-        getAllElementById(targetHtmlElement?.id, (element) => {
+        getAllElementsById(targetHtmlElement?.id, (element) => {
             element.setAttribute('href', (e.target as HTMLInputElement).value)
         })
     }
