@@ -11,6 +11,7 @@ export interface NavItemProps {
     url ?: string;
     label ?: string;
     id ?: string;
+    openLinkInNewTab ?: boolean
 }
 export interface SocialLinkProps {
     className ?: string;
@@ -56,7 +57,7 @@ const Footer: React.FC<FooterProps> = (props) => {
                             {
                                 navItems.map((nav, index) => (
                                     <MenuItem key={index}>
-                                        <Button href={nav?.url}  id={nav?.id}>
+                                        <Button href={nav?.url}  id={nav?.id} target={nav?.openLinkInNewTab ? '_blank' : '_self'}>
                                             {nav?.label}
                                         </Button>
                                     </MenuItem>

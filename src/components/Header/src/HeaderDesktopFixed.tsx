@@ -22,7 +22,7 @@ const HeaderDesktopFixed = ({
                     <Logo className="header-desktop-fixed__logo" {...logoProps} />
                     <Box className="header-desktop-fixed__menu">
                         {navItems && navItems.map((nav, index) => (
-                            <Button href={nav?.url} id={nav?.id} key={index} sx={{ color: '#fff' }}>
+                            <Button href={nav?.url} id={nav?.id} key={index} target={nav?.openLinkInNewTab ? '_blank' : '_self'} sx={{ color: '#fff' }}>
                                 {nav?.label}
                             </Button>
                         ))}

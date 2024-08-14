@@ -63,7 +63,7 @@ const HeaderMobile = ({
                                     {
                                         navItems.map((nav, index) => (
                                             <MenuItem sx={{flexDirection: 'column'}} key={index}>
-                                                <Button href={nav?.url} id={nav?.id}  sx={{ width:'100%', overflow:'hidden', color: '#fff', px: 2 }}>
+                                                <Button href={nav?.url} id={nav?.id} target={nav?.openLinkInNewTab ? '_blank' : '_self'}  sx={{ width:'100%', overflow:'hidden', color: '#fff', px: 2 }}>
                                                     {nav?.label}
                                                 </Button>
                                                 { index < navItems?.length - 1 && <Divider sx={{width: '100%'}}></Divider>}

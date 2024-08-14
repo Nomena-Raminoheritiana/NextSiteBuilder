@@ -5,6 +5,7 @@ export interface NavItem {
     url ?: string;
     label ?: string;
     id ?: string;
+    openLinkInNewTab ?: boolean
 }
 
 export interface HeaderDesktopFixedProps extends sxProps {

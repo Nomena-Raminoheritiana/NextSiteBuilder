@@ -26,7 +26,7 @@ const HeaderDesktopFlex = ({
                   <LogoFlex {...logoProps} />
                   <Box className="header-desktop-flex__menu">
                       {navItems && navItems.map((nav, index) => (
-                          <Button href={nav?.url} key={index} id={nav?.id}>
+                          <Button href={nav?.url} key={index} id={nav?.id} target={nav?.openLinkInNewTab ? '_blank' : '_self'}>
                               {nav?.label}
                           </Button>
                       ))}
