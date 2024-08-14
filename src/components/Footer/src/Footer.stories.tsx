@@ -45,8 +45,8 @@ export const footer: Story = {
                     title:'',
                     id: '98'
                 },
-                url: {
-                    href : '',
+                link: {
+                    url : '',
                     id: '99'
                 }
             },
@@ -56,8 +56,8 @@ export const footer: Story = {
                     title:'',
                     id: '100'
                 },
-                url:  {
-                    href : '',
+                link:  {
+                    url : '',
                     id: '101'
                 }
             },
@@ -67,8 +67,8 @@ export const footer: Story = {
                     title:'',
                     id: '102'
                 },
-                url:  {
-                    href : '',
+                link:  {
+                    url : '',
                     id: '103'
                 }
             }

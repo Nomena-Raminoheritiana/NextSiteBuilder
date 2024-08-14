@@ -3,11 +3,10 @@ const updateHyperlinkById = (copyObjData, id, newValue) => {
 
     // Vérifie si l'objet actuel contient la clé "id" et si elle correspond à l'ID recherché
     if (copyObjData && copyObjData.id === id) {
-        if (copyObjData.label !== undefined) {
-            copyObjData.label = newValue?.label || null;
-            copyObjData.url = newValue?.url || null;
-            updated = true; // Indique que la mise à jour a été effectuée
-        }
+        copyObjData.label = newValue?.label || null;
+        copyObjData.url = newValue?.url || null;
+        copyObjData.openLinkInNewTab = newValue?.openLinkInNewTab || false;
+        updated = true; // Indique que la mise à jour a été effectuée
     }
 
     // Parcourt récursivement les objets imbriqués et les tableaux

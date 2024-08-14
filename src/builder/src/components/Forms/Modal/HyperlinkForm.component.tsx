@@ -1,5 +1,16 @@
-import React, {Suspense, useContext, useRef, useState} from "react"
-import {Backdrop, Box, Button, Fade, Modal, TextField, Typography} from "@mui/material";
+import React, {Suspense, useContext, useMemo, useRef, useState} from "react"
+import {
+    Backdrop,
+    Box,
+    Button,
+    Fade,
+    FormControlLabel,
+    FormGroup,
+    Modal,
+    Switch,
+    TextField,
+    Typography
+} from "@mui/material";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/services/getId";
 import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
@@ -35,10 +46,16 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
     const dataContextValue = useContext(BuilderContext);
     const inputLabelRef = useRef<HTMLInputElement>();
     const inputUrlRef = useRef<HTMLInputElement>();
+    const inputSwitchTargetRef = useRef<HTMLInputElement>();
+    const inputSwitchDefaultValue = useMemo(() => {
+        return targetHtmlElement?.getAttribute('target')=='_blank'
+    }, [])
 
 
-    const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";
+    const defaultInnerHTML = targetHtmlElement ? targetHtmlElement?.innerHTML : "";
     const defaultUrl = targetHtmlElement ? targetHtmlElement?.getAttribute('href') : "";
+    const defaultTarget = targetHtmlElement ? targetHtmlElement?.getAttribute('target') : "";
+
     const onSaveClick = async (e) => {
         e.preventDefault();
         const copyOfDataContext = {...dataContextValue?.dataContext};
@@ -51,7 +68,8 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
                 targetId,
               {
                   label : inputLabelRef?.current?.value,
-                  url : inputUrlRef?.current?.value
+                  url : inputUrlRef?.current?.value,
+                  openLinkInNewTab: inputSwitchTargetRef?.current?.checked ? '_blank' : '_self'
               }
             )
             if(updated) {
@@ -73,8 +91,9 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
         setIsModalOpen(false);
         if (!saveContent && targetHtmlElement) {
             getAllElementsById(targetHtmlElement?.id, (element) => {
-                element.textContent = defaultTextContent;
+                element.innerHTML = defaultInnerHTML;
                 element.setAttribute('href', defaultUrl);
+                element.setAttribute('target', defaultTarget)
             })
         }
         if (handleCloseContextMenu) {
@@ -82,17 +101,24 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
         }
     }
 
-    const onChangeLabel = (e:React.MouseEvent<HTMLInputElement>) => {
+    const handleChangeLabel = (e:React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
         getAllElementsById(targetHtmlElement?.id, (element) => {
             element.textContent = (e.target as HTMLInputElement).value
         })
     }
 
-    const onChangeUrl = (e:React.MouseEvent<HTMLInputElement>) => {
+    const handleChangeUrl = (e:React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
         getAllElementsById(targetHtmlElement?.id, (element) => {
             element.setAttribute('href', (e.target as HTMLInputElement).value)
+        })
+    }
+
+    const handleChangeOpenInNewTab = (e:React.MouseEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        getAllElementsById(targetHtmlElement?.id, (element) => {
+            element.setAttribute('target', (e.target as HTMLInputElement).checked ? '_blank' : '_self')
         })
     }
 
@@ -114,12 +140,23 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
                 <Box sx={modalStyle}>
                     <Suspense fallback={'loading...'}>
                         <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
-                            Modify the properties of the link
+                            Modify the Hyperlink
                         </Typography>
-                        <Box mt={3}>
-                            <TextField onChange={onChangeLabel} inputRef={inputLabelRef} defaultValue={targetHtmlElement?.textContent} fullWidth label="Change the label" />
-                            <TextField onChange={onChangeUrl} sx={{mt:4}}  inputRef={inputUrlRef} defaultValue={targetHtmlElement?.getAttribute('href')} fullWidth label="Change the URL" />
-                        </Box>
+                        <FormGroup sx={{mt:3}}>
+                            <TextField onChange={handleChangeLabel} inputRef={inputLabelRef} defaultValue={targetHtmlElement?.textContent} fullWidth label="Change the label" />
+                            <TextField onChange={handleChangeUrl} sx={{mt:4}}  inputRef={inputUrlRef} defaultValue={targetHtmlElement?.getAttribute('href')} fullWidth label="Change the URL" />
+                            <FormControlLabel
+                                sx={{mt:3}}
+                                control={
+                                    <Switch
+                                        inputRef={inputSwitchTargetRef}
+                                        onChange={handleChangeOpenInNewTab}
+                                        defaultChecked={inputSwitchDefaultValue}
+                                    />
+                                }
+                                label="Open in a new tab" />
+
+                        </FormGroup>
                         <Box mt={3}>
                             <Button
                                 onClick={onSaveClick}

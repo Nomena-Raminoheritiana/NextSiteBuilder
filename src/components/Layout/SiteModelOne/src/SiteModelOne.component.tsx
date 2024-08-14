@@ -14,7 +14,7 @@ import pageProps from "@/components/Layout/SiteModelOne/src/defaultProps/page.ma
 import {Container, Divider} from "@mui/material";
 
 const SiteModelOne: React.FC = (props:object = {}) => {
-    const data = JSON.stringify(props) !== '{}' ? props : pageProps
+    const data = JSON.stringify(props) !== '{}' ? props : pageProps;
     return <>
         <main className={'main'}>
             <Header {...data?.HeaderProps} className={'main-header'} />

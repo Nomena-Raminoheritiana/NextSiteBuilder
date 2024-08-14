@@ -612,8 +612,8 @@ export const footerProps = {
                 title:'',
                 id: '98'
             },
-            url: {
-                href : '',
+            link: {
+                url : '',
                 id: '99'
             }
         },
@@ -623,8 +623,8 @@ export const footerProps = {
                 title:'',
                 id: '100'
             },
-            url:  {
-                href : '',
+            link:  {
+                url : '',
                 id: '101'
             }
         },
@@ -634,8 +634,8 @@ export const footerProps = {
                 title:'',
                 id: '102'
             },
-            url:  {
-                href : '',
+            link:  {
+                url : '',
                 id: '103'
             }
         }

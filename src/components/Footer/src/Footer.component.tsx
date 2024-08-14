@@ -16,9 +16,10 @@ export interface NavItemProps {
 export interface SocialLinkProps {
     className ?: string;
     icon : ImageProps;
-    url : {
-        href ?: string,
-        id ?: string
+    link : {
+        url ?: string;
+        id ?: string;
+        openLinkInNewTab ?: boolean;
     };
 }
 
@@ -72,7 +73,7 @@ const Footer: React.FC<FooterProps> = (props) => {
                                 {
                                     socialLinks.map((nav, index) => (
                                         <MenuItem key={index}>
-                                            <Link href={nav.url.href} id={nav.url.id} className={`Footer--socialLinks_hyperlink`}>
+                                            <Link href={nav?.link?.url} id={nav?.link?.id} target={nav?.link?.openLinkInNewTab ? '_blank' : '_self'} className={`Footer--socialLinks_hyperlink`}>
                                                 <Image {...nav?.icon} className={`Footer--socialLinks_icon`} />
                                             </Link>
                                         </MenuItem>
