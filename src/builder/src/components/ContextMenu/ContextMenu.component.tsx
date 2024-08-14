@@ -3,7 +3,7 @@ import {Backdrop, Box} from "@mui/material";
 import {useEffect} from "react";
 import {MarkdownToJSX} from "markdown-to-jsx";
 import HTMLTags = MarkdownToJSX.HTMLTags;
-import DefaultMenuList from "@/builder/src/components/ContextMenu/DefaultMenuList.component";
+import DefaultMenuList from "@/builder/src/components/ContextMenu/MenuLists/DefaultMenuList.component";
 
 export interface menuItem {
     muiIcon ?: string,
