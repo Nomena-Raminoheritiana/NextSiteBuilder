@@ -88,7 +88,7 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
     const onSaveClick = async (e) => {
         e.preventDefault();
         const copyOfDataContext = {...dataContextValue?.dataContext};
-        const pageId = dataContextValue?.pageId;
+        const modelId = dataContextValue?.modelId;
         const apiConfig = dataContextValue.apiConfig
         const targetId = getId(targetHtmlElement);
         const imagePayload = {
@@ -96,11 +96,11 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
             title: (inputTitleRef?.current as HTMLInputElement)?.value,
             alt: (inputAltRef?.current as HTMLInputElement)?.value
         }
-        await deleteImage(apiConfig, pageId, targetHtmlElement?.id);
+        await deleteImage(apiConfig, modelId, targetHtmlElement?.id);
         if(toogleButtonActive === 'fromDevice') {
             if(image?.file && image?.name) {
                 setLoading(true);
-                const response =  await uploadImage(apiConfig, image.file, pageId, targetHtmlElement?.id );
+                const response =  await uploadImage(apiConfig, image.file, modelId, targetHtmlElement?.id );
                 if(response) {
                   imagePayload.url = response.url;
                 }
@@ -115,7 +115,7 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
             )
             if(updated) {
                 setLoading(true);
-                const saved = await savePageProps(pageId, apiConfig, copyOfDataContext);
+                const saved = await savePageProps(modelId, apiConfig, copyOfDataContext);
                 setLoading(false);
                 saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }

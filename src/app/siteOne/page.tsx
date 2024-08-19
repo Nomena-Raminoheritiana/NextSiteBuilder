@@ -3,14 +3,15 @@ import Builder from "@/builder";
 import apiConfig from './config/apiConfig/api.config.json'
 import fetchPageProps from "@/app/siteOne/lib/fetchData/fetchPageProps";
 import SiteModelOne from "@/components/Layout/SiteModelOne/src/SiteModelOne.component";
+import modelDefaultProps from "@/components/Layout/SiteModelOne/src/defaultProps/page.main.props";
 
 
 export default async function Page() {
-   const pageId = 1;
+   const modelId = 1;
    let data = null;
    try {
-        const dataFromApi = await fetchPageProps(pageId);
-        data = dataFromApi?.props ?? null;
+        const dataFromApi = await fetchPageProps(modelId);
+        data = dataFromApi?.props || modelDefaultProps;
    } catch (e) {
         console.error('Error fetching page props:', e);
    }
@@ -19,7 +20,7 @@ export default async function Page() {
       <Builder
           data={data}
           apiConfig={apiConfig}
-          pageId={pageId}
+          modelId={modelId}
       >
         <SiteModelOne {...data} />
       </Builder>

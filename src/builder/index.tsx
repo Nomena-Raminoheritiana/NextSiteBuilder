@@ -15,7 +15,7 @@ interface BuilderProps {
     manualStart ?: boolean;
     data ?: object;
     apiConfig : ApiConfigInterface,
-    pageId?: number
+    modelId?: number
 }
 
 const Builder:React.FC<BuilderProps> = (props) => {
@@ -24,7 +24,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
         manualStart = false,
         data,
         apiConfig,
-        pageId = null
+        modelId = null
     } = props
 
     const [dataContext, setDataContext] = useState(data)
@@ -36,7 +36,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
         dataContext,
         setDataContext,
         apiConfig,
-        pageId,
+        modelId,
         token
     }
 

@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import apiConfig from '../../config/apiConfig/api.config.json'
 
 
-const fetchPageProps = async (pageId) => {
+const fetchPageProps = async (modelId) => {
 
     const requestOptions = {
         method: "GET",
@@ -12,10 +12,10 @@ const fetchPageProps = async (pageId) => {
         redirect: 'follow'
     };
 
-    const pagePropsUrl = `${apiConfig.mainPageEndpoint}/${pageId}`
-    const result = await fetch(apiConfig.domain + pagePropsUrl, requestOptions);
+    const modelPropsUrl = `${apiConfig.mainPageEndpoint}/${modelId}`
+    const result = await fetch(apiConfig.domain + modelPropsUrl, requestOptions);
     if (result.status !== 200) {
-        console.log('Error when getting page props from '+ apiConfig.domain + pagePropsUrl);
+        console.log('Error when getting page props from '+ apiConfig.domain + modelPropsUrl);
         return false;
     }
     return result.json()

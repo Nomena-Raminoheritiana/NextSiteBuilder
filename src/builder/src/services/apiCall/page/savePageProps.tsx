@@ -2,7 +2,7 @@ import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 import {getTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 
 const savePageProps = async (
-    pageId: string | null | undefined,
+    modelId: string | null | undefined,
     apiConfig: ApiConfigInterface,
     newData
 ) => {
@@ -22,7 +22,7 @@ const savePageProps = async (
         body: JSON.stringify(data)
     };
 
-    const pagePropsUrl = `${apiConfig.mainPageEndpoint}/${pageId}`;
+    const pagePropsUrl = `${apiConfig.mainPageEndpoint}/${modelId}`;
     const result = await fetch(apiConfig.domain + pagePropsUrl, requestOptions);
     if (result.status !== 200) {
         console.log('Error when pushing data from '+ apiConfig.domain + pagePropsUrl);

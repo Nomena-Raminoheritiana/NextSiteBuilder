@@ -1,6 +1,6 @@
 {
   "domain" : "http://127.0.0.1:8000",
-  "mainPageEndpoint" : "/api/pages",
+  "mainPageEndpoint" : "/api/models",
   "image" : {
     "uploadEndpoint" : "/api/images",
     "deleteEndpoint" : "/api/images/{idFromFront}"

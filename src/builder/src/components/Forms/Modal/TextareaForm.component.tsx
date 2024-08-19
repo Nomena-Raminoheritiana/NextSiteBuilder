@@ -40,7 +40,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
     const onSaveClick = async (e) => {
         e.preventDefault();
         const copyOfDataContext = {...dataContextValue?.dataContext};
-        const pageId = dataContextValue.pageId;
+        const modelId = dataContextValue.modelId;
         const apiConfig = dataContextValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
@@ -51,7 +51,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
            )
             if(updated) {
               setLoading(true);
-              const saved = await savePageProps(pageId, apiConfig, copyOfDataContext);
+              const saved = await savePageProps(modelId, apiConfig, copyOfDataContext);
               setLoading(false);
               saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
             }

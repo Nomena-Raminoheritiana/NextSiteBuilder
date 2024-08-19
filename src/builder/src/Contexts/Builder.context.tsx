@@ -6,7 +6,7 @@ export interface BuilderContextInterface {
     dataContext?: Record<string, any>;
     setDataContext?: React.Dispatch<React.SetStateAction<Record<string, any>>>;
     apiConfig: ApiConfigInterface;
-    pageId?: string | null;
+    modelId?: string | null;
     token?: string | null;
 }
 
@@ -14,7 +14,7 @@ export const BuilderContext = createContext<BuilderContextInterface>({
     dataContext : {},
     setDataContext : () => {},
     apiConfig : DefaultApiConfig,
-    pageId: null,
+    modelId: null,
     token: null
 });
 
