@@ -3,10 +3,10 @@ import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 import DefaultApiConfig from "@/builder/src/data/DefaultApiConfig.json";
 
 export interface BuilderContextInterface {
-    dataContext?: Record<string, any>;
+    dataContext?: Record<string, any> | null;
     setDataContext?: React.Dispatch<React.SetStateAction<Record<string, any>>>;
     apiConfig: ApiConfigInterface;
-    modelId?: string | null;
+    modelId?: number | string | null;
     token?: string | null;
 }
 

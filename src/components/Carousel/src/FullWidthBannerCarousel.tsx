@@ -1,5 +1,3 @@
-'use client'
-
 import React, {useEffect, useState} from 'react';
 import Carousel, {CarouselProps} from "@/components/Carousel/src/Carousel";
 import {BannerFullWidthProps} from "@/components/Banner/src/BannerFullWidth";
@@ -18,7 +16,7 @@ const FullWidthBannerCarousel = (
         setIsComponentRendered(true)
     }, [])
     const {items} = carouselProps;
-    const bannerFullWidthComponents = items ? items.map((BannerFullWidthProps) => <BannerFullWidth {...BannerFullWidthProps} />) : []
+    const bannerFullWidthComponents = items ? items.map((BannerFullWidthProps, key) => <BannerFullWidth {...BannerFullWidthProps} key={key} />) : []
     const FirstBanner = !isComponentRendered && bannerFullWidthComponents.length >0 ? bannerFullWidthComponents[0] : null;
     return <Box data-component-name={'FullWidthBannerCarousel'}>
         { FirstBanner }

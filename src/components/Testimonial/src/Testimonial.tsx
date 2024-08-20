@@ -1,5 +1,3 @@
-'use client'
-
 import React, {useState} from 'react';
 import '../style/Testimonial.scss'
 import {Box, Grid} from "@mui/material";

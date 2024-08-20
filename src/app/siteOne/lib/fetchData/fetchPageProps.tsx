@@ -1,15 +1,18 @@
 import fetch from 'node-fetch';
 import apiConfig from '../../config/apiConfig/api.config.json'
 
+export interface ModelDataInterface {
+    props?: object
+}
 
-const fetchPageProps = async (modelId) => {
+const fetchPageProps = async (modelId:number): Promise<ModelDataInterface | boolean> => {
 
     const requestOptions = {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
         },
-        redirect: 'follow'
+        redirect: 'follow' as RequestRedirect
     };
 
     const modelPropsUrl = `${apiConfig.mainPageEndpoint}/${modelId}`
@@ -18,7 +21,7 @@ const fetchPageProps = async (modelId) => {
         console.log('Error when getting page props from '+ apiConfig.domain + modelPropsUrl);
         return false;
     }
-    return result.json()
+    return result.json() as Promise<ModelDataInterface>
 }
 
 export default fetchPageProps;

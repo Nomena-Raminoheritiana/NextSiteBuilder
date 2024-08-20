@@ -28,10 +28,10 @@ export const carousel: Story = {
         animation : 'slide',
         cycleNavigation : true,
         items : [
-            <div style={{height:'350px', display:'flex', alignItems:'center', background:'#156A79'}}>
+            <div key={0} style={{height:'350px', display:'flex', alignItems:'center', background:'#156A79'}}>
                 <h1 style={{textAlign: 'center', marginLeft:'auto', marginRight:'auto',  color: 'white'}}>SLIDE 1</h1>
             </div>,
-            <div style={{height:'350px', display:'flex', alignItems:'center', background:'#154c79'}}>
+            <div key={1} style={{height:'350px', display:'flex', alignItems:'center', background:'#154c79'}}>
                 <h1 style={{textAlign: 'center', marginLeft:'auto', marginRight:'auto', color: 'white'}}>SLIDE 2</h1>
             </div>
         ]

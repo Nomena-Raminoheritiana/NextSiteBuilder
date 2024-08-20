@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import {Box} from "@mui/material";
+import InViewHoc from "@/components/InViewHoc";
+import {lazyPicture} from "@/components/LazyPicture/src/LazyPicture.stories";
 
 export interface LazyPictureProps {
   children: any;
@@ -57,5 +59,8 @@ const StyledPicture = styled.picture`
     animation: fade-in 1s ease;
   }
 `;
+
+LazyPicture.displayName = 'LazyPicture';
+
 
 export default LazyPicture;

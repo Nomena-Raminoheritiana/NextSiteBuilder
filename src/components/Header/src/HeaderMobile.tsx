@@ -1,4 +1,3 @@
-'use client'
 import React, {useState} from 'react';
 import {HeaderMobileProps} from'./interfaces/Header.interface'
 import "../styles/headerMobile.scss"

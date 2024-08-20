@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import {Box, Grid} from "@mui/material";
 import sxProps from "@/interfaces/sx.interface";

@@ -11,8 +11,8 @@ export interface ImageCarouselMod1Props extends CarouselProps {
 
 const ImageCarouselMod1: React.FC<ImageCarouselMod1Props>  = (carouselProps) => {
     const {items, className} = carouselProps;
-    const images = items && items.map((imageProps) => (
-      <Image {...imageProps} className={`ìmageCarouselMod1--img priority ${imageProps?.className || ''}`} />
+    const images = items && items.map((imageProps, index) => (
+      <Image {...imageProps} key={index} className={`ìmageCarouselMod1--img priority ${imageProps?.className || ''}`} />
     ))
     return <Box data-component-name={'ImageCarouselMod1'}>
         <Carousel

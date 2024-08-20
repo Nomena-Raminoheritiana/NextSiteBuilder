@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react';
 import {default as CarouselUi} from 'react-material-ui-carousel';
 import {CarouselProps} from "@/components/Carousel/src/interfaces/Carousel.interface";

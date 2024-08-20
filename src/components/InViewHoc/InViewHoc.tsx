@@ -20,4 +20,6 @@ const InViewHoc: React.FC<InViewHocProps> = React.memo(({ children, className, .
   </div>
 });
 
+InViewHoc.displayName = 'InViewHoc';
+
 export default InViewHoc;

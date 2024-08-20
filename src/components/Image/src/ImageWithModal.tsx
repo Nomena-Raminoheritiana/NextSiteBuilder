@@ -1,4 +1,3 @@
-'use client'
 import React, {useState} from 'react';
 import ImageProps from "@/interfaces/image.interface";
 import {Box, Modal} from "@mui/material";

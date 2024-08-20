@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Backdrop, Box} from "@mui/material";
-import {useEffect} from "react";
+import {ReactElement, useEffect} from "react";
 import {MarkdownToJSX} from "markdown-to-jsx";
 import HTMLTags = MarkdownToJSX.HTMLTags;
 import DefaultMenuList from "@/builder/src/components/ContextMenu/MenuLists/DefaultMenuList.component";
@@ -11,12 +11,13 @@ export interface menuItem {
     divider ?: boolean
 }
 
-export interface ParagraphContextMenuProps {
+export interface ContextMenuProps {
     tags?: HTMLTags[];
-    menuItems ?: menuItem[]
+    menuItems ?: menuItem[];
+    children ?: ReactElement;
 }
 
-const ContextMenu: React.FC<ParagraphContextMenuProps> = (props) => {
+const ContextMenu: React.FC<ContextMenuProps> = (props) => {
     const {
         tags,
         menuItems,

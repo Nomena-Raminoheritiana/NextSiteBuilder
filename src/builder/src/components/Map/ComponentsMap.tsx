@@ -1,10 +1,10 @@
 import React from 'react';
 
 const componentMap = {
-    TextareaForm: () => import('../../components/Forms/Modal/TextareaForm.component'),
-    DeleteConfirmation: () => import('../../components/Forms/Modal/DeleteConfirmation.component'),
-    ImageForm: () => import('../../components/Forms/Modal/ImageForm.component'),
-    HyperlinkForm: () => import('../../components/Forms/Modal/HyperlinkForm.component'),
+    TextareaForm: () => import('@/builder/src/components/Forms/Modal/TextareaForm.component'),
+    DeleteConfirmation: () => import('@/builder/src/components/Forms/Modal/DeleteConfirmation.component'),
+    ImageForm: () => import('@/builder/src/components/Forms/Modal/ImageForm.component'),
+    HyperlinkForm: () => import('@/builder/src/components/Forms/Modal/HyperlinkForm.component'),
 };
 
 export const getComponent = (componentName) => {
