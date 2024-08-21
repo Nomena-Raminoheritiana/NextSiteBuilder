@@ -6,7 +6,7 @@ export default async function uploadImage(apiConfig:ApiConfigInterface, file: Fi
         const pageIRI = `${apiConfig.mainPageEndpoint}/${modelId}`
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('page', pageIRI);
+        formData.append('model', pageIRI);
         formData.append('idFromFront', idFromFront);
 
         try {
