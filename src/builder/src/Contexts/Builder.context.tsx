@@ -1,21 +1,26 @@
 import React, {createContext} from "react";
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 import DefaultApiConfig from "@/builder/src/data/DefaultApiConfig.json";
+import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.interface";
 
 export interface BuilderContextInterface {
-    dataContext?: Record<string, any> | null;
-    setDataContext?: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+    pageProps?: Record<string, any> | null;
+    setPageProps?: React.Dispatch<React.SetStateAction<Record<string, any>>>;
     apiConfig: ApiConfigInterface;
     modelId?: number | string | null;
     token?: string | null;
+    availableThemes ?: AvailableThemesInterface | null;
+    themeNameUsed ?: string | null;
 }
 
 export const BuilderContext = createContext<BuilderContextInterface>({
-    dataContext : {},
-    setDataContext : () => {},
+    pageProps : {},
+    setPageProps : () => {},
     apiConfig : DefaultApiConfig,
     modelId: null,
-    token: null
+    token: null,
+    availableThemes: null,
+    themeNameUsed: null
 });
 
 export default BuilderContext;

@@ -2,7 +2,8 @@ import fetch from 'node-fetch';
 import apiConfig from '../../config/apiConfig/api.config.json'
 
 export interface ModelDataInterface {
-    props?: object
+    props?: object,
+    themeColor?: string
 }
 
 const fetchPageProps = async (modelId:number): Promise<ModelDataInterface | boolean> => {

@@ -10,6 +10,8 @@ import ValidateTokenFromLS from "@/builder/src/services/authentication/ValidateT
 import {setTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 import BuilderContext, {BuilderContextInterface} from "@/builder/src/Contexts/Builder.context";
 import '@/builder/styles/_hoverElements.scss';
+import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/ThemeSelectorMenuComponent";
+import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.interface";
 
 
 interface BuilderProps {
@@ -17,6 +19,8 @@ interface BuilderProps {
     data ?: Record<string, any> | null;
     apiConfig : ApiConfigInterface;
     modelId?: number;
+    availableThemes ?: AvailableThemesInterface | null;
+    themeNameUsed ?: string | null;
     children?: ReactElement
 }
 
@@ -26,19 +30,23 @@ const Builder:React.FC<BuilderProps> = (props) => {
         manualStart = false,
         data,
         apiConfig,
-        modelId = null
+        modelId = null,
+        availableThemes = null,
+        themeNameUsed = null
     } = props
 
-    const [dataContext, setDataContext] = useState(data)
+    const [pageProps, setPageProps] = useState(data)
     const [token, setToken] = useState<string | null>(null);
     const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
     const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
     const builderContextValue:BuilderContextInterface = {
-        dataContext,
-        setDataContext,
+        pageProps,
+        setPageProps,
         apiConfig,
         modelId,
-        token
+        token,
+        availableThemes,
+        themeNameUsed
     }
 
     useEffect(() => {
@@ -54,6 +62,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
             <BuilderContext.Provider value={builderContextValue}>
                 <Box className={"builder-container"}>
                     <HoverImageBorderMemo />
+                    <ThemeSelectorMenuComponent />
                     {MainContextMenuMemo}
                 </Box>
                 <Box className={"builder-children"}>
