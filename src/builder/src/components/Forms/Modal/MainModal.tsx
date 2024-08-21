@@ -1,10 +1,8 @@
-import React, {ReactElement, Suspense, useContext, useRef, useState} from 'react'
+import React, {ReactElement, Suspense, useState} from 'react'
 import {Alert, Backdrop, Box, Button, Fade, Modal, Snackbar} from "@mui/material";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import BuilderContext from "@/builder/src/Contexts/Builder.context";
-import getId from "@/builder/src/Utils/HTML/getId";
-import updateTextById from "@/builder/src/services/setData/updateTextById";
-import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps";
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -94,7 +92,7 @@ const MainModal:React.FC<MainModalProps> = (props) => {
                                 { loading ?  <>
                                     <HourglassTopIcon />
                                     LOADING...
-                                </> : mainButtonLabel || "Save and close" }
+                                </> : mainButtonLabel || <><SaveIcon sx={{mr:1}} /> Save and close</> }
                             </Button>
                             <Button
                                 onClick={handleCancelClick}
@@ -105,7 +103,7 @@ const MainModal:React.FC<MainModalProps> = (props) => {
                                     ml: 2
                                 }}
                             >
-                                {cancelButtonLabel || 'Cancel'}
+                                {cancelButtonLabel || <><CancelIcon sx={{mr:1}}/> Cancel</>}
                             </Button>
                         </Box>
                     </Suspense>
