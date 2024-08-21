@@ -36,6 +36,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
     } = props
 
     const [pageProps, setPageProps] = useState(data)
+    const [themeUsed, setThemeUsed] = useState<string | null>(themeNameUsed)
     const [token, setToken] = useState<string | null>(null);
     const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
     const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
@@ -46,7 +47,8 @@ const Builder:React.FC<BuilderProps> = (props) => {
         modelId,
         token,
         availableThemes,
-        themeNameUsed
+        themeUsed,
+        setThemeUsed
     }
 
     useEffect(() => {

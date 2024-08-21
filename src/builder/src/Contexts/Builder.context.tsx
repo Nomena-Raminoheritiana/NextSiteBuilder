@@ -10,7 +10,8 @@ export interface BuilderContextInterface {
     modelId?: number | string | null;
     token?: string | null;
     availableThemes ?: AvailableThemesInterface | null;
-    themeNameUsed ?: string | null;
+    themeUsed?: string | null;
+    setThemeUsed?: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const BuilderContext = createContext<BuilderContextInterface>({
@@ -20,7 +21,8 @@ export const BuilderContext = createContext<BuilderContextInterface>({
     modelId: null,
     token: null,
     availableThemes: null,
-    themeNameUsed: null
+    themeUsed: null,
+    setThemeUsed : () => {}
 });
 
 export default BuilderContext;

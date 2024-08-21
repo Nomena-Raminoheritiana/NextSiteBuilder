@@ -11,8 +11,8 @@ interface ThemeSelectorComponentInterface {
 
 const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
 
-    const builderContext = useContext(BuilderContext);
-    const [themeChecked, setThemeChecked] = useState<string | null>(builderContext.themeNameUsed || null)
+    const {themeUsed, modelId, apiConfig, availableThemes, setThemeUsed} = useContext(BuilderContext);
+    const [themeChecked, setThemeChecked] = useState<string | null>(themeUsed || null)
     const defaultThemeChecked = useMemo(() => themeChecked, [])
     const updateDOMTheme = (themeValue) => {
         const webSiteContainer = document.querySelector(`[class*="theme-color-"]`)
@@ -25,8 +25,9 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
     }
 
     const handleSave = async (e) => {
-        if(builderContext?.modelId && builderContext?.apiConfig) {
-            await saveModelTheme(builderContext.modelId, builderContext.apiConfig, themeChecked)
+        if(modelId && apiConfig) {
+            const saved = await saveModelTheme(modelId, apiConfig, themeChecked);
+            saved && setThemeUsed && setThemeUsed(themeChecked)
         }
     }
 
@@ -51,12 +52,12 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
                 <Typography variant={'h6'}>Available Themes</Typography>
                 <Box className={'site-preview-container-flex'}>
                     {
-                        builderContext.availableThemes?.themes.map((theme, key) => (
+                        availableThemes?.themes.map((theme, key) => (
                             <div className={'site-preview-sub-container'} key={key}>
                                 <ImageWithLoader
                                     imgClassName={'site-preview'}
                                     key={'image'+key}
-                                    src={`/api/imageResolver?siteModelName=${builderContext.availableThemes?.siteModelName}&fileName=${theme.imagePreview}`}
+                                    src={`/api/imageResolver?siteModelName=${availableThemes?.siteModelName}&fileName=${theme.imagePreview}`}
                                     alt={`theme-${key}`}
                                 />
                                 <Radio
