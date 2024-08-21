@@ -3,7 +3,7 @@
   "menuItems": [
     {
       "muiIcon":  "Edit",
-      "label":  "Edit",
+      "label":  "Edit content",
       "divider": false,
       "componentToShow" : "TextareaForm"
     },
