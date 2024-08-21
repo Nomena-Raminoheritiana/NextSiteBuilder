@@ -13,10 +13,11 @@ import {
 } from "@mui/material";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/Utils/HTML/getId";
-import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
+import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps";
 import updateHyperlinkById from "@/builder/src/services/setData/updateHyperlinkById";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import getAllElementsById from "@/builder/src/Utils/HTML/getAllElementsById";
+import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
 
 export interface HyperlinkFormProps {
     targetHtmlElement:HTMLElement;
@@ -40,10 +41,7 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
         targetHtmlElement,
         handleCloseContextMenu
     } = props
-
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
-    const [loading, setLoading] =  useState<boolean>(false);
-    const dataContextValue = useContext(BuilderContext);
+    const pagePropsValue = useContext(BuilderContext);
     const inputLabelRef = useRef<HTMLInputElement>();
     const inputUrlRef = useRef<HTMLInputElement>();
     const inputSwitchTargetRef = useRef<HTMLInputElement>();
@@ -56,15 +54,15 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
     const defaultUrl = targetHtmlElement ? targetHtmlElement?.getAttribute('href') : "";
     const defaultTarget = targetHtmlElement ? targetHtmlElement?.getAttribute('target') : "";
 
-    const onSaveClick = async (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        const copyOfDataContext = {...dataContextValue?.dataContext};
-        const modelId = dataContextValue.modelId;
-        const apiConfig = dataContextValue.apiConfig
+        const copyOfpageProps = {...pagePropsValue?.pageProps};
+        const modelId = pagePropsValue.modelId;
+        const apiConfig = pagePropsValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
           const updated =  updateHyperlinkById(
-                copyOfDataContext,
+                copyOfpageProps,
                 targetId,
               {
                   label : inputLabelRef?.current?.value,
@@ -73,22 +71,14 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
               }
             )
             if(updated) {
-                setLoading(true);
-                const saved = await savePageProps(modelId, apiConfig, copyOfDataContext);
-                setLoading(false);
-                saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
+                const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
+                saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
             }
         }
-        handleClose(true);
+        handleCancel(e,true);
     }
 
-    const onCancelClick = (e) => {
-        e.preventDefault();
-        handleClose();
-    }
-
-    const handleClose = (saveContent = false) => {
-        setIsModalOpen(false);
+    const handleCancel = (e, saveContent = false) => {
         if (!saveContent && targetHtmlElement) {
             getAllElementsById(targetHtmlElement?.id, (element) => {
                 element.innerHTML = defaultInnerHTML;
@@ -123,65 +113,29 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
     }
 
     return <>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={isModalOpen}
-            onClose={handleClose}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-                backdrop: {
-                    timeout: 500,
-                },
-            }}
+        <MainModal
+            handleMainButtonClick={handleSave}
+            handleCancel={handleCancel}
         >
-            <Fade in={isModalOpen}>
-                <Box sx={modalStyle}>
-                    <Suspense fallback={'loading...'}>
-                        <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
-                            Modify the Hyperlink
-                        </Typography>
-                        <FormGroup sx={{mt:3}}>
-                            <TextField onChange={handleChangeLabel} inputRef={inputLabelRef} defaultValue={targetHtmlElement?.textContent} fullWidth label="Change the label" />
-                            <TextField onChange={handleChangeUrl} sx={{mt:4}}  inputRef={inputUrlRef} defaultValue={targetHtmlElement?.getAttribute('href')} fullWidth label="Change the URL" />
-                            <FormControlLabel
-                                sx={{mt:3}}
-                                control={
-                                    <Switch
-                                        inputRef={inputSwitchTargetRef}
-                                        onChange={handleChangeOpenInNewTab}
-                                        defaultChecked={inputSwitchDefaultValue}
-                                    />
-                                }
-                                label="Open in a new tab" />
+            <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
+                Modify the Hyperlink
+            </Typography>
+            <FormGroup sx={{mt:3}}>
+                <TextField onChange={handleChangeLabel} inputRef={inputLabelRef} defaultValue={targetHtmlElement?.textContent} fullWidth label="Change the label" />
+                <TextField onChange={handleChangeUrl} sx={{mt:4}}  inputRef={inputUrlRef} defaultValue={targetHtmlElement?.getAttribute('href')} fullWidth label="Change the URL" />
+                <FormControlLabel
+                    sx={{mt:3}}
+                    control={
+                        <Switch
+                            inputRef={inputSwitchTargetRef}
+                            onChange={handleChangeOpenInNewTab}
+                            defaultChecked={inputSwitchDefaultValue}
+                        />
+                    }
+                    label="Open in a new tab" />
 
-                        </FormGroup>
-                        <Box mt={3}>
-                            <Button
-                                onClick={onSaveClick}
-                                variant="contained"
-                            >
-                                { loading ?  <>
-                                    <HourglassTopIcon />
-                                    LOADING...
-                                </> : "Save and close" }
-                            </Button>
-                            <Button
-                                onClick={onCancelClick}
-                                variant="contained"
-                                sx={{
-                                    backgroundColor:"#dc3545",
-                                    ml: 2
-                                }}
-                            >
-                                Cancel
-                            </Button>
-                        </Box>
-                    </Suspense>
-                </Box>
-            </Fade>
-        </Modal>
+            </FormGroup>
+        </MainModal>
     </>
 }
 

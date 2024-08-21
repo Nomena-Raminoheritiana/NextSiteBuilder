@@ -2,8 +2,9 @@ import React, {Suspense, useContext, useRef, useState} from "react"
 import {Backdrop, Box, Button, Fade, Modal, Typography} from "@mui/material";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/Utils/HTML/getId";
-import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
+import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps";
 import deleteElementById from "@/builder/src/services/setData/deleteElementById";
+import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
 
 export interface TextareaFormProps {
     targetHtmlElement:HTMLElement;
@@ -28,43 +29,31 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
         handleCloseContextMenu
     } = props
 
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
-
-    const textAreaRef = useRef(null);
-    const dataContextValue = useContext(BuilderContext);
-
+    const pagePropsValue = useContext(BuilderContext);
 
     const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";
-    const onDeleteClick = async (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        const copyOfDataContext = {...dataContextValue?.dataContext};
-        const modelId = dataContextValue.modelId;
-        const apiConfig = dataContextValue.apiConfig
+        const copyOfpageProps = {...pagePropsValue?.pageProps};
+        const modelId = pagePropsValue.modelId;
+        const apiConfig = pagePropsValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
             console.log('ato')
             const deleted = deleteElementById(
-                copyOfDataContext,
+                copyOfpageProps,
                 targetId
             )
-            console.log('deleted ', deleted)
-            console.log(copyOfDataContext)
             if(deleted) {
-               const saved = await savePageProps(modelId, apiConfig, copyOfDataContext);
-               saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
+               const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
+               saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
             }
         }
-        handleClose(true);
+        handleCancel(e,true);
         targetHtmlElement.remove();
     }
 
-    const onCancelClick = (e) => {
-        e.preventDefault();
-        handleClose();
-    }
-
-    const handleClose = (saveContent = false) => {
-        setIsModalOpen(false);
+    const handleCancel = (e, saveContent = false) => {
         !saveContent && targetHtmlElement && (targetHtmlElement.textContent = defaultTextContent)
         if (handleCloseContextMenu) {
             setTimeout(() => handleCloseContextMenu(), 1000);
@@ -72,34 +61,17 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
     }
 
     return <>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={isModalOpen}
-            onClose={handleClose}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-                backdrop: {
-                    timeout: 500,
-                },
-            }}
+        <MainModal
+            handleMainButtonClick={handleSave}
+            handleCancel={handleCancel}
         >
-            <Fade in={isModalOpen}>
-                <Box sx={modalStyle}>
-                    <Suspense fallback={'loading...'}>
-                        <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
-                            Are you sure to delete the element ?
-                        </Typography>
-                        <Typography paragraph={true} sx={{mb:2, textAlign:'left', fontSize:'15px'}}>
-                            This action is no longer reversible
-                        </Typography>
-                        <Button onClick={onDeleteClick} sx={{color:'red'}}>Delete</Button>
-                        <Button onClick={onCancelClick} >Cancel</Button>
-                    </Suspense>
-                </Box>
-            </Fade>
-        </Modal>
+            <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
+                Are you sure to delete the element ?
+            </Typography>
+            <Typography paragraph={true} sx={{mb:2, textAlign:'left', fontSize:'15px'}}>
+                This action is no longer reversible
+            </Typography>
+        </MainModal>
     </>
 }
 

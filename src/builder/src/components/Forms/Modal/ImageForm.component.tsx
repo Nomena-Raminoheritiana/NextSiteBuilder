@@ -16,11 +16,12 @@ import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/Utils/HTML/getId";
 import styled from "styled-components";
-import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
+import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps";
 import updateImageUrlById from "@/builder/src/services/setData/updateImageUrlById";
 import getLocalImageUrl from "@/builder/src/Utils/Image/getLocalImageUrl";
 import uploadImage from "@/builder/src/services/apiCall/image/UploadImage";
 import deleteImage from "@/builder/src/services/apiCall/image/DeleteImage";
+import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
 
 export interface ImageFormProps {
     targetHtmlElement:HTMLElement;
@@ -65,7 +66,6 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         handleCloseContextMenu
     } = props
 
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
     const [defaultUrlImagePreview] = useState(targetHtmlElement?.getAttribute('src'));
     const [image, setImage] = useState<FileResult>({
         url: targetHtmlElement?.getAttribute('src'),
@@ -73,11 +73,10 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         file: null
     });
     const [toogleButtonActive,setToogleButtonActive] = useState<ToogleButtonAlignment>("fromUrl");
-    const [loading, setLoading] =  useState<boolean>(false);
     const inputTitleRef = useRef();
     const inputAltRef = useRef();
     const inputFileRef = useRef();
-    const dataContextValue = useContext(BuilderContext);
+    const pagePropsValue = useContext(BuilderContext);
 
     useEffect(() => {
         image?.url && targetHtmlElement?.setAttribute('src', image.url);
@@ -85,11 +84,11 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
 
 
     const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";
-    const onSaveClick = async (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        const copyOfDataContext = {...dataContextValue?.dataContext};
-        const modelId = dataContextValue?.modelId;
-        const apiConfig = dataContextValue.apiConfig
+        const copyOfpageProps = {...pagePropsValue?.pageProps};
+        const modelId = pagePropsValue?.modelId;
+        const apiConfig = pagePropsValue.apiConfig
         const targetId = getId(targetHtmlElement);
         const imagePayload = {
             url: image?.url,
@@ -99,37 +98,27 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         await deleteImage(apiConfig, modelId, targetHtmlElement?.id);
         if(toogleButtonActive === 'fromDevice') {
             if(image?.file && image?.name) {
-                setLoading(true);
                 const response =  await uploadImage(apiConfig, image.file, modelId, targetHtmlElement?.id );
                 if(response) {
                   imagePayload.url = response.url;
                 }
-                setLoading(false);
             }
         }
         if(targetId) {
             const updated = updateImageUrlById(
-                copyOfDataContext,
+                copyOfpageProps,
                 targetId,
                 imagePayload
             )
             if(updated) {
-                setLoading(true);
-                const saved = await savePageProps(modelId, apiConfig, copyOfDataContext);
-                setLoading(false);
-                saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
+                const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
+                saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
             }
         }
-        handleClose(true);
+        handleCancel(e,true);
     }
 
-    const onCancelClick = (e) => {
-        e.preventDefault();
-        handleClose();
-    }
-
-    const handleClose = (saveContent = false) => {
-        setIsModalOpen(false);
+    const handleCancel = (e, saveContent = false) => {
         !saveContent && setImage({
             ...image,
             url: defaultUrlImagePreview
@@ -189,114 +178,77 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         title && targetHtmlElement?.setAttribute('title', title);
     }
 
+
     return <>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={isModalOpen}
-            onClose={onCancelClick}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-                backdrop: {
-                    timeout: 500,
-                },
-            }}
+        <MainModal
+            handleMainButtonClick={handleSave}
+            handleCancel={handleCancel}
         >
-            <Fade in={isModalOpen}>
-                <StyledWrapper className={'imageForm'}>
-                    <Box sx={modalStyle}>
-                        <Suspense fallback={'loading...'}>
-                            <Typography variant={'h6'} sx={{mb:2}}>Modify image</Typography>
-                            <Grid container spacing={2} sx={{width:{xs:'95vw', md:'80vw'}}}>
-                                <Grid item xs={12} md={6}>
-                                    {
-                                        image?.url &&
-                                        <img src={image?.url} className={'original-image'} alt={'original image'}/>
-                                    }
-                                </Grid>
-                                <Grid item xs={12} md={6}>
-                                    <ToggleButtonGroup
-                                        color="primary"
-                                        value={toogleButtonActive}
-                                        exclusive
-                                        onChange={handleChangeToogleButton}
-                                        aria-label="Platform"
-                                    >
-                                        <ToggleButton value="fromUrl">From URL</ToggleButton>
-                                        <ToggleButton value="fromDevice">From device</ToggleButton>
-                                    </ToggleButtonGroup>
-                                    {
-                                        toogleButtonActive === 'fromUrl' &&
-                                        <Box mt={3}>
-                                            <TextField onChange={handleChangeInputFromUrl} defaultValue={image?.url} fullWidth label="Put image url"  />
-                                        </Box>
-                                    }
+            <StyledWrapper>
+                <Typography variant={'h6'} sx={{mb:2}}>Modify image</Typography>
+                <Grid container spacing={2} sx={{width:{xs:'95vw', md:'80vw'}}}>
+                    <Grid item xs={12} md={6}>
+                        {
+                            image?.url &&
+                            <img src={image?.url} className={'original-image'} alt={'original image'}/>
+                        }
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <ToggleButtonGroup
+                            color="primary"
+                            value={toogleButtonActive}
+                            exclusive
+                            onChange={handleChangeToogleButton}
+                            aria-label="Platform"
+                        >
+                            <ToggleButton value="fromUrl">From URL</ToggleButton>
+                            <ToggleButton value="fromDevice">From device</ToggleButton>
+                        </ToggleButtonGroup>
+                        {
+                            toogleButtonActive === 'fromUrl' &&
+                            <Box mt={3}>
+                                <TextField onChange={handleChangeInputFromUrl} defaultValue={image?.url} fullWidth label="Put image url"  />
+                            </Box>
+                        }
 
-                                    {
-                                        toogleButtonActive === 'fromDevice' &&
-                                        <Box mt={3}>
-                                            <Button
-                                                component="label"
-                                                role={undefined}
-                                                variant="contained"
-                                                tabIndex={-1}
-                                                startIcon={<CloudUploadIcon />}
-                                                sx={{
-                                                    backgroundColor: "#28a745"
-                                                }}
-                                            >
-                                                Upload file
-                                                <VisuallyHiddenInput
-                                                    type="file"
-                                                    onChange={handleFileChange}
-                                                    ref={inputFileRef}
-                                                />
-                                            </Button>
-                                            <TextField
-                                                fullWidth disabled
-                                                value={image.name || ''}
-                                                sx={{
-                                                    mt:2
-                                                }}
-                                            />
-                                        </Box>
-                                    }
-                                    <Box sx={{mt:2}}>
-                                        <TextField sx={{mt:2}} onChange={handleTitleChange} inputRef={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
-                                        <TextField sx={{mt:4}} onChange={handleAltChange} inputRef={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
-                                    </Box>
-
-                                    <Box mt={3}>
-                                        <Button
-                                            onClick={onSaveClick}
-                                            variant="contained"
-                                        >
-                                            { loading ?  <>
-                                                <HourglassTopIcon />
-                                                LOADING...
-                                            </> : "Save and close" }
-                                        </Button>
-                                        <Button
-                                            onClick={onCancelClick}
-                                            variant="contained"
-                                            sx={{
-                                                backgroundColor:"#dc3545",
-                                                ml: 2
-                                        }}
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </Suspense>
-                    </Box>
-                </StyledWrapper>
-            </Fade>
-        </Modal>
+                        {
+                            toogleButtonActive === 'fromDevice' &&
+                            <Box mt={3}>
+                                <Button
+                                    component="label"
+                                    role={undefined}
+                                    variant="contained"
+                                    tabIndex={-1}
+                                    startIcon={<CloudUploadIcon />}
+                                    sx={{
+                                        backgroundColor: "#28a745"
+                                    }}
+                                >
+                                    Upload file
+                                    <VisuallyHiddenInput
+                                        type="file"
+                                        onChange={handleFileChange}
+                                        ref={inputFileRef}
+                                    />
+                                </Button>
+                                <TextField
+                                    fullWidth disabled
+                                    value={image.name || ''}
+                                    sx={{
+                                        mt:2
+                                    }}
+                                />
+                            </Box>
+                        }
+                        <Box sx={{mt:2}}>
+                            <TextField sx={{mt:2}} onChange={handleTitleChange} inputRef={inputTitleRef} defaultValue={targetHtmlElement?.getAttribute('title')} fullWidth label="Enter the title of the image" />
+                            <TextField sx={{mt:4}} onChange={handleAltChange} inputRef={inputAltRef} defaultValue={targetHtmlElement?.getAttribute('alt')} fullWidth label="Enter the alt of the image" />
+                        </Box>
+                    </Grid>
+                </Grid>
+            </StyledWrapper>
+        </MainModal>
     </>
-
 }
 
 const StyledWrapper = styled.div<{ className: string }>`

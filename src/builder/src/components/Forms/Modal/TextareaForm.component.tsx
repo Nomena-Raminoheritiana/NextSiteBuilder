@@ -4,7 +4,8 @@ import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import updateTextById from "@/builder/src/services/setData/updateTextById";
 import getId from "@/builder/src/Utils/HTML/getId";
-import savePageProps from "@/builder/src/services/apiCall/page/savePageProps";
+import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps";
+import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
 
 export interface TextareaFormProps {
     targetHtmlElement:HTMLElement;
@@ -29,101 +30,53 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
         handleCloseContextMenu
     } = props
 
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
-    const [loading, setLoading] =  useState<boolean>(false);
-
     const textAreaRef = useRef(null);
-    const dataContextValue = useContext(BuilderContext);
-
-
+    const pagePropsValue = useContext(BuilderContext);
     const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";
-    const onSaveClick = async (e) => {
+
+    const handleSave = async (e) => {
         e.preventDefault();
-        const copyOfDataContext = {...dataContextValue?.dataContext};
-        const modelId = dataContextValue.modelId;
-        const apiConfig = dataContextValue.apiConfig
+        const copyOfpageProps = {...pagePropsValue?.pageProps};
+        const modelId = pagePropsValue.modelId;
+        const apiConfig = pagePropsValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
            const updated = updateTextById(
-                copyOfDataContext,
+                copyOfpageProps,
                 targetId,
                 textAreaRef.current.value
            )
             if(updated) {
-              setLoading(true);
-              const saved = await savePageProps(modelId, apiConfig, copyOfDataContext);
-              setLoading(false);
-              saved && dataContextValue?.setDataContext && dataContextValue?.setDataContext(copyOfDataContext)
+              const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
+              saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
             }
         }
-       handleClose(true);
+        handleCancel(e,true);
     }
 
-    const onCancelClick = (e) => {
-        e.preventDefault();
-        handleClose();
-    }
-
-    const handleClose = (saveContent = false) => {
-        setIsModalOpen(false);
+    const handleCancel = (e, saveContent = false) => {
         if(!saveContent) targetHtmlElement.textContent = defaultTextContent
         if(handleCloseContextMenu) setTimeout(() => handleCloseContextMenu(), 1000)
     }
 
     return <>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={isModalOpen}
-            onClose={onCancelClick}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-            slotProps={{
-                backdrop: {
-                    timeout: 500,
-                },
-            }}
+        <MainModal
+            handleMainButtonClick={handleSave}
+            handleCancel={handleCancel}
         >
-            <Fade in={isModalOpen}>
-                <Box sx={modalStyle}>
-                    <Suspense fallback={'loading...'}>
-                        <Typography variant={'h6'} sx={{mb:2}}>Modify the content</Typography>
-                        <textarea
-                            id="story"
-                            name="story"
-                            rows="15"
-                            cols="100"
-                            style={{border: '2px solid grey'}}
-                            defaultValue={targetHtmlElement && targetHtmlElement?.textContent}
-                            onInput={(e) => targetHtmlElement && (targetHtmlElement.textContent = e.target.value) }
-                            ref={textAreaRef}
-                        >
-                        </textarea>
-                        <Box mt={3}>
-                            <Button
-                                onClick={onSaveClick}
-                                variant="contained"
-                            >
-                                { loading ?  <>
-                                    <HourglassTopIcon />
-                                    LOADING...
-                                </> : "Save and close" }
-                            </Button>
-                            <Button
-                                onClick={onCancelClick}
-                                variant="contained"
-                                sx={{
-                                    backgroundColor:"#dc3545",
-                                    ml: 2
-                                }}
-                            >
-                                Cancel
-                            </Button>
-                        </Box>
-                    </Suspense>
-                </Box>
-            </Fade>
-        </Modal>
+            <Typography variant={'h6'} sx={{mb:2}}>Modify the content</Typography>
+            <textarea
+                id="story"
+                name="story"
+                rows="15"
+                cols="100"
+                style={{border: '2px solid grey'}}
+                defaultValue={targetHtmlElement && targetHtmlElement?.textContent}
+                onInput={(e) => targetHtmlElement && (targetHtmlElement.textContent = e.target.value) }
+                ref={textAreaRef}
+            >
+            </textarea>
+        </MainModal>
     </>
 }
 
