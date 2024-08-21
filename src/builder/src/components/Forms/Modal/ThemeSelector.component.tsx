@@ -1,10 +1,11 @@
-import React, {useContext, Suspense, useState, useMemo, useCallback, useDeferredValue} from 'react'
+import React, {useContext, useState, useMemo} from 'react'
 import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
 import {Box, CircularProgress, Radio, Typography} from "@mui/material";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import styled from "styled-components";
 import ImageWithLoader from "@/builder/src/components/Images/ImageWithLoader";
 import saveModelTheme from "@/builder/src/services/apiCall/model/saveModelTheme";
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 
 interface ThemeSelectorComponentInterface {
 }
@@ -25,7 +26,7 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
     }
 
     const handleSave = async (e) => {
-        if(modelId && apiConfig) {
+        if(modelId && apiConfig && availableThemes?.themes?.length>0) {
             const saved = await saveModelTheme(modelId, apiConfig, themeChecked);
             saved && setThemeUsed && setThemeUsed(themeChecked)
         }
@@ -78,6 +79,16 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
                         ))
                     }
                 </Box>
+                {
+                    availableThemes?.themes?.length === 0 &&
+                    <>
+                        <Typography paragraph={true} sx={{fontSize:'50px', textAlign:'center', mb:'88px', color:'#90a4ae'}}>
+                            <AnnouncementIcon fontSize={'large'} />
+                            <br />
+                            No available Themes found
+                        </Typography>
+                    </>
+                }
             </StyledWrapper>
         </MainModal>
     </>
