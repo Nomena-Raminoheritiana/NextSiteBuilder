@@ -1,5 +1,5 @@
 import React, {ReactElement, Suspense, useContext, useRef, useState} from 'react'
-import {Backdrop, Box, Button, Fade, Modal} from "@mui/material";
+import {Alert, Backdrop, Box, Button, Fade, Modal, Snackbar} from "@mui/material";
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import getId from "@/builder/src/Utils/HTML/getId";
@@ -36,12 +36,14 @@ const MainModal:React.FC<MainModalProps> = (props) => {
     } = props
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = React.useState(false);
     const [loading, setLoading] =  useState<boolean>(false);
     const handleSaveClick = async (e) => {
         e.preventDefault();
         setLoading(true);
         await handleMainButtonClick(e);
         setIsModalOpen(false);
+        setOpenSuccessSnackBar(true);
     }
 
     const handleCancelClick = (e) => {
@@ -53,6 +55,15 @@ const MainModal:React.FC<MainModalProps> = (props) => {
     }
 
     return <>
+        <Snackbar open={openSuccessSnackBar} autoHideDuration={6000} onClose={() => setOpenSuccessSnackBar(false)}>
+            <Alert
+                severity="success"
+                variant="filled"
+                sx={{ width: '100%' }}
+            >
+                Your data is successfully saved
+            </Alert>
+        </Snackbar>
         <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
