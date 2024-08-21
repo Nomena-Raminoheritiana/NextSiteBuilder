@@ -5,6 +5,7 @@ import getId from "@/builder/src/Utils/HTML/getId";
 import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps";
 import deleteElementById from "@/builder/src/services/setData/deleteElementById";
 import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export interface TextareaFormProps {
     targetHtmlElement:HTMLElement;
@@ -64,6 +65,7 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
         <MainModal
             handleMainButtonClick={handleSave}
             handleCancel={handleCancel}
+            mainButtonLabel={<><DeleteForeverIcon sx={{mr:1}} /> Delete Element</>}
         >
             <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
                 Are you sure to delete the element ?

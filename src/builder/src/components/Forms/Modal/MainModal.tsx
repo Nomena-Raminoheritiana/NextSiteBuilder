@@ -19,7 +19,7 @@ const modalStyle = {
 interface MainModalProps {
     handleMainButtonClick: (e:React.MouseEvent) => Promise<void>;
     handleCancel?: (e:React.MouseEvent) => void;
-    mainButtonLabel?: string | null;
+    mainButtonLabel?: string | null | ReactElement | ReactElement[];
     cancelButtonLabel?: string | null;
     children : ReactElement | ReactElement[]
 }
