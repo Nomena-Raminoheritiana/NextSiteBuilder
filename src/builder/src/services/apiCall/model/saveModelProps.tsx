@@ -1,8 +1,8 @@
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 import {getTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 
-const savePageProps = async (
-    modelId: string | null | undefined,
+const saveModelProps = async (
+    modelId: any,
     apiConfig: ApiConfigInterface,
     newData
 ) => {
@@ -18,7 +18,7 @@ const savePageProps = async (
             'Accept': 'application/json',
             'Authorization': `Bearer ${getTokenFromLS()}`
         },
-        redirect: 'follow',
+        redirect: 'follow' as RequestRedirect,
         body: JSON.stringify(data)
     };
 
@@ -31,4 +31,4 @@ const savePageProps = async (
     return result.json()
 }
 
-export default savePageProps;
+export default saveModelProps;
