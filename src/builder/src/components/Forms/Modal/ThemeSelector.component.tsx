@@ -19,8 +19,8 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
         if(webSiteContainer) {
            const classNamesArray = webSiteContainer.className.split(" ");
            const themeClass = classNamesArray.find(cls => cls.startsWith("theme-color-"));
-           webSiteContainer.classList.add(`theme-color-${themeValue}`);
            webSiteContainer.classList.remove(themeClass);
+           webSiteContainer.classList.add(`theme-color-${themeValue}`);
         }
     }
 
