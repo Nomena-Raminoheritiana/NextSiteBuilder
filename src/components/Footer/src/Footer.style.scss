@@ -1,6 +1,6 @@
 @import "src/scss/breakpoints";
 .Footer {
-  background: #1976d2;
+  background: var(--primary-color, #1976d2);
   padding-top: 80px;
   padding-bottom: 80px;
   border-top-left-radius: 10px;

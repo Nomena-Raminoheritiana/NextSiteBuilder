@@ -2,7 +2,7 @@
 .carouselFullWidth {
   .carousel--navButtons__container {
     .carousel--navButtons {
-      background: #1976d2;
+      background: var(--primary-color, #1976d2);
     }
   }
   .carousel--indicator__container {
@@ -11,7 +11,7 @@
     z-index: 998;
   }
   .carousel--indicator__button {
-    color: #1976d2;
+    color: var(--primary-color, #1976d2);
     transform: scale(1.4);
     opacity: 0.5;
     background: rgba(255,255,255,0.7);

@@ -1,7 +1,7 @@
 .Accordion {
  .MuiAccordionSummary-expandIconWrapper {
    color: white;
-   background: #1976d2;
+   background: var(--primary-color, #1976d2);
    border-radius: 999px;
  }
 

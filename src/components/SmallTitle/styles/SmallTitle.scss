@@ -1,7 +1,7 @@
 @import "src/scss/_breakpoints";
 
 .SmallTitle.priority {
-  color : #1976d2;
+  color : var(--primary-color, #1976d2);
   text-align: center;
   font-weight: 700;
   font-size: 14px;

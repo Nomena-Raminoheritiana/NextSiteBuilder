@@ -29,7 +29,7 @@
       padding-left: 31px;
     }
     .TestimonialAuthor--contents-author__name {
-      color : #1976d2;
+      color : var(--primary-color, #1976d2);
       display : block;
       font-size : 30px;
       font-family: 'Arial', serif;
@@ -43,7 +43,7 @@
       }
     }
     .TestimonialAuthor--contents-author__jobTitle {
-      color : #7C8BA1;
+      color : var(--paragraph-color, #7C8BA1);
       display : block;
       font-weight : 500;
       height : 27.2px;
