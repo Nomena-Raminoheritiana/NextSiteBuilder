@@ -53,7 +53,7 @@ const HeaderMobile = ({
                     onClick={handleClose}
                 >
                 </Backdrop>
-                <Toolbar className={`left-toolbar ${isBackdropOpen ? 'isOpen' : 'isClosed'}`} sx={{height: '100vh', width:'50vw', background: '#1976d2', zIndex:999, position:'absolute', top:0, display: 'none'}}>
+                <Toolbar className={`left-toolbar ${isBackdropOpen ? 'isOpen' : 'isClosed'}`} sx={{height: '100vh', width:'50vw', background: 'var(--primary-color, #1976d2)', zIndex:999, position:'absolute', top:0, display: 'none'}}>
                     <Box sx={{ mt:4, display: 'flex', flexDirection:'column'}}>
                         <Logo {...logoProps} sx={{mx:'auto'}} />
                         {navItems && (

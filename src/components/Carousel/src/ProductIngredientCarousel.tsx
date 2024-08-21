@@ -207,7 +207,7 @@ export const commonStyles = css`
       .splide__pagination__page {
         width: 10px;
         height: 10px;
-        background-color:  #1976d2;
+        background-color:  var(--primary-color, #1976d2);
         border-radius: 50%;
         margin-right: 16px;
         padding: 0;
@@ -218,7 +218,7 @@ export const commonStyles = css`
         }
       }
       .is-active {
-        background-color: #1976d2;
+        background-color: var(--primary-color, #1976d2);
         border-radius: 56px;
         width: 51px;
         transform:none;
@@ -235,9 +235,9 @@ export const commonStyles = css`
     .splide__arrow--next, .splide__arrow--prev {
       width: 40px;
       height: 40px;
-      border: solid 2px #1976d2;
+      border: solid 2px var(--primary-color, #1976d2);
       border-radius: 50%;
-      background: #1976d2;
+      background: var(--primary-color, #1976d2);
       transform: rotateY(180deg);
       padding: 8px;
       position: absolute;

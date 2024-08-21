@@ -218,7 +218,7 @@ export const commonStyles = css`
         }
       }
       .product-ingredient-card_listIcon {
-        color: #1976d2
+        color: var(--primary-color, #1976d2)
       }
       .product-ingredient-card_Icon-container {
         min-width: 36px;

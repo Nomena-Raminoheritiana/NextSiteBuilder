@@ -15,7 +15,7 @@ const MarqueeText = ({
     return <>
         <Box
             sx={{
-                background:'#1976d2'
+                background:'var(--primary-color, #1976d2)'
             }}
             data-component-name={'MarqueeText'}
         >
@@ -24,7 +24,7 @@ const MarqueeText = ({
                 speed={20}
                 gradient={true}
                 gradientWidth={mobileScreen ? 50 : 500}
-                gradientColor={'#1976d2'}
+                gradientColor={'var(--primary-color, #1976d2)'}
             >
                 <Typography
                     variant={textHeading}
