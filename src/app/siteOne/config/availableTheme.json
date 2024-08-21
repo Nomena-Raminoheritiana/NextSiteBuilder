@@ -1,0 +1,13 @@
+{
+  "siteModelName": "siteOne",
+  "themes" : [
+    {
+      "name": "default",
+      "imagePreview": "default.PNG"
+    },
+    {
+      "name": "violet",
+      "imagePreview": "violet.PNG"
+    }
+  ]
+}
