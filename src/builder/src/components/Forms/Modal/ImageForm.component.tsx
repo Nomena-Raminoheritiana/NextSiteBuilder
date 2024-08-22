@@ -113,17 +113,18 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
             if(updated) {
                 const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
                 saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
+                return true
             }
         }
-        handleCancel(e,true);
+       return false
     }
 
-    const handleCancel = (e, saveContent = false) => {
-        !saveContent && setImage({
+    const handleCancel = (e) => {
+        setImage({
             ...image,
             url: defaultUrlImagePreview
         });
-        if(!saveContent) targetHtmlElement.textContent = defaultTextContent
+        targetHtmlElement.textContent = defaultTextContent
         if(handleCloseContextMenu) setTimeout(() => handleCloseContextMenu(), 1000)
     }
 

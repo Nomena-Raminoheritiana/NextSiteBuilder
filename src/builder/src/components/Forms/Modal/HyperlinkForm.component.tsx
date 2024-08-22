@@ -73,13 +73,14 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
             if(updated) {
                 const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
                 saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
+                return true;
             }
         }
-        handleCancel(e,true);
+        return false;
     }
 
-    const handleCancel = (e, saveContent = false) => {
-        if (!saveContent && targetHtmlElement) {
+    const handleCancel = (e) => {
+        if (targetHtmlElement) {
             getAllElementsById(targetHtmlElement?.id, (element) => {
                 element.innerHTML = defaultInnerHTML;
                 element.setAttribute('href', defaultUrl);

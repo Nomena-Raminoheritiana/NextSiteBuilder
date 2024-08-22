@@ -32,10 +32,8 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
         }
     }
 
-    const handleCancel = (e, saveContent = false) => {
-        if(!saveContent) {
-            updateDOMTheme(defaultThemeChecked);
-        }
+    const handleCancel = (e) => {
+        updateDOMTheme(defaultThemeChecked);
     }
 
     const handleThemeChange = (e:React.ChangeEvent<HTMLInputElement>) => {

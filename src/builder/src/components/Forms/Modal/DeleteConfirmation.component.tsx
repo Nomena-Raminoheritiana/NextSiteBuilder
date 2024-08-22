@@ -40,22 +40,22 @@ const DeleteConfirmationComponent: React.FC<TextareaFormProps> = (props) => {
         const apiConfig = pagePropsValue.apiConfig
         const targetId = getId(targetHtmlElement);
         if(targetId) {
-            console.log('ato')
             const deleted = deleteElementById(
                 copyOfpageProps,
                 targetId
             )
             if(deleted) {
-               const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
-               saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
+                const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
+                saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
+                targetHtmlElement.remove();
+                return true;
             }
         }
-        handleCancel(e,true);
-        targetHtmlElement.remove();
+      return false
     }
 
     const handleCancel = (e, saveContent = false) => {
-        !saveContent && targetHtmlElement && (targetHtmlElement.textContent = defaultTextContent)
+        targetHtmlElement && (targetHtmlElement.textContent = defaultTextContent)
         if (handleCloseContextMenu) {
             setTimeout(() => handleCloseContextMenu(), 1000);
         }

@@ -49,13 +49,14 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
             if(updated) {
               const saved = await saveModelProps(modelId, apiConfig, copyOfpageProps);
               saved && pagePropsValue?.setPageProps && pagePropsValue?.setPageProps(copyOfpageProps)
+              return true;
             }
         }
-        handleCancel(e,true);
+      return false;
     }
 
-    const handleCancel = (e, saveContent = false) => {
-        if(!saveContent) targetHtmlElement.textContent = defaultTextContent
+    const handleCancel = (e) => {
+        targetHtmlElement.textContent = defaultTextContent
         if(handleCloseContextMenu) setTimeout(() => handleCloseContextMenu(), 1000)
     }
 
