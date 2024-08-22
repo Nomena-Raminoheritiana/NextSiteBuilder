@@ -35,13 +35,14 @@ const MainModal:React.FC<MainModalProps> = (props) => {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = React.useState(false);
+    const [openErrorSnackBar, setOpenErrorSnackBar] = React.useState(false);
     const [loading, setLoading] =  useState<boolean>(false);
     const handleSaveClick = async (e) => {
         e.preventDefault();
         setLoading(true);
-        await handleMainButtonClick(e);
+        const processed = await handleMainButtonClick(e);
         setIsModalOpen(false);
-        setOpenSuccessSnackBar(true);
+        processed ? setOpenSuccessSnackBar(true) : setOpenErrorSnackBar(true)
     }
 
     const handleCancelClick = (e) => {
@@ -60,6 +61,15 @@ const MainModal:React.FC<MainModalProps> = (props) => {
                 sx={{ width: '100%' }}
             >
                 Your data is successfully saved
+            </Alert>
+        </Snackbar>
+        <Snackbar open={openErrorSnackBar} autoHideDuration={6000} onClose={() => setOpenErrorSnackBar(false)}>
+            <Alert
+                severity="error"
+                variant="filled"
+                sx={{ width: '100%' }}
+            >
+                Something went wrong while processing data
             </Alert>
         </Snackbar>
         <Modal
