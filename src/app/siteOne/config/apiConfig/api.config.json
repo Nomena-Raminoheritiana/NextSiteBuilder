@@ -6,5 +6,6 @@
     "deleteEndpoint" : "/api/images/{idFromFront}"
   },
   "loginEndpoint" : "/login",
-  "tokenVerificationEndpoint" : "/api/verifyToken"
+  "tokenVerificationEndpoint" : "/api/verifyToken",
+  "logoutEndpoint" : "/logout"
 }

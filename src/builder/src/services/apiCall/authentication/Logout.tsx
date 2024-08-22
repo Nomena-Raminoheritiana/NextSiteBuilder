@@ -1,8 +1,8 @@
 import ApiConfigInterface from "@/builder/src/Interfaces/ApiConfig.interface";
 
-export default async function VerifyToken(apiConfig: ApiConfigInterface, token: string):Promise<boolean|string> {
+export default async function Logout(apiConfig: ApiConfigInterface, token: string):Promise<boolean|string> {
     try {
-        const response = await fetch(`${apiConfig?.domain}${apiConfig?.tokenVerificationEndpoint}`, {
+        const response = await fetch(`${apiConfig?.domain}${apiConfig?.logoutEndpoint}`, {
             method: 'POST',
             contentType: 'application/json',
             headers: {
@@ -12,8 +12,7 @@ export default async function VerifyToken(apiConfig: ApiConfigInterface, token: 
         if (!response.ok) {
             return false;
         }
-        const result =  await response.json()
-        return "verified" in result ? result.verified : false
+        return true;
     } catch (error) {
         return false;
     }

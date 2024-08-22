@@ -6,5 +6,6 @@ export default interface ApiConfigInterface {
         "deleteEndpoint": string
     },
     "loginEndpoint" : string,
-    "tokenVerificationEndpoint" : string
+    "tokenVerificationEndpoint" : string,
+    "logoutEndpoint" : string
 }
