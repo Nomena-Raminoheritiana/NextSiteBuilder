@@ -20,7 +20,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
     } = props
 
     const pagePropsValue = useContext(BuilderContext);
-    const defaultTextContent = targetHtmlElement ? targetHtmlElement?.textContent : "";
+    const defaultTextContent = targetHtmlElement ? targetHtmlElement?.innerHTML : "";
 
     const handleSave = async (e) => {
         e.preventDefault();
@@ -44,7 +44,7 @@ const TextareaForm: React.FC<TextareaFormProps> = (props) => {
     }
 
     const handleCancel = (e) => {
-        // targetHtmlElement.textContent = defaultTextContent
+        targetHtmlElement.innerHTML = defaultTextContent
         if(handleCloseContextMenu) setTimeout(() => handleCloseContextMenu(), 1000)
     }
 
