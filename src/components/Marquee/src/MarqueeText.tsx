@@ -33,9 +33,8 @@ const MarqueeText = ({
                         py: 2
                     }}
                     id={id}
-                >
-                    {text}
-                </Typography>
+                    dangerouslySetInnerHTML={{ __html: text }}
+                />
             </Marquee>
         </Box>
 

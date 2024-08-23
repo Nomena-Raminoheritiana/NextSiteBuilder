@@ -39,9 +39,11 @@ const SingleTestimonial: React.FC<SingleTestimonialProps> = (props) => {
             { paragraph && (
                 <>
                     {quoteOpened}
-                    <blockquote className={'singleTestimonial--blockquote'} id={paragraph?.id}>
-                        {paragraph?.text}
-                    </blockquote>
+                    <blockquote
+                        className={'singleTestimonial--blockquote'}
+                        id={paragraph?.id}
+                        dangerouslySetInnerHTML={{ __html: paragraph?.text || ''}}
+                    />
                     {quoteClosed}
                 </>
             )}

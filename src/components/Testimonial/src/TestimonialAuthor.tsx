@@ -33,15 +33,13 @@ const TestimonialAuthor: React.FC<TestimonialAuthorProps> = (props) => {
                 <h5
                     className="TestimonialAuthor--contents-author__name"
                     id={name?.id}
-                >
-                    {name?.text}
-                </h5>
+                    dangerouslySetInnerHTML={{ __html: name?.text || ''}}
+                />
                 <p
                     className="TestimonialAuthor--contents-author__jobTitle"
                     id={jobTitle?.id}
-                >
-                    {jobTitle?.text}
-                </p>
+                    dangerouslySetInnerHTML={{ __html: jobTitle?.text || ''}}
+                />
             </div>
         </div>
     </>

@@ -34,12 +34,19 @@ const BannerFullWidth = (
             </Box>
             <Box className="banner__contents-container">
                 <Box className="banner__contents">
-                    <Typography className="banner__title" id={title?.id} variant={titleHeading}>
-                        {title?.text}
-                    </Typography>
-                    <Typography className="banner__paragraph" id={paragraph?.id} paragraph={true}>
-                        {paragraph?.text}
-                    </Typography>
+                    <Typography
+                        className="banner__title"
+                        id={title?.id}
+                        variant={titleHeading}
+                        dangerouslySetInnerHTML={{ __html: title?.text }}
+                    />
+                    <Typography
+                        className="banner__paragraph"
+                        id={paragraph?.id}
+                        paragraph={true}
+                        dangerouslySetInnerHTML={{ __html: paragraph?.text }}
+                    />
+
                 </Box>
             </Box>
         </Box>

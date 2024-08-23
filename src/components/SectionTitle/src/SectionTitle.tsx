@@ -18,9 +18,8 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
         className={'SectionTitle priority ' + className}
         data-component-name={'SectionTitle'}
         id={id}
-    >
-        {children}
-    </Typography>
+        dangerouslySetInnerHTML={{ __html: children }}
+    />
 )
 
 export default SectionTitle

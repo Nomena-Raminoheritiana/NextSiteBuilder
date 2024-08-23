@@ -16,9 +16,8 @@ const SectionParagraph: React.FC<SectionParagraphProps> = ({
         className={'SectionParagraph priority ' + className}
         data-component-name={'SectionParagraph'}
         id={id}
-    >
-        {children}
-    </Typography>
+        dangerouslySetInnerHTML={{ __html: children }}
+    />
 )
 
 export default SectionParagraph

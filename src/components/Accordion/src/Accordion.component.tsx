@@ -64,7 +64,7 @@ const Accordion: React.FC<AccordionProps> = (props) => {
                             id={`panel${index}-header`}
                             className={'Accordion--summary'}
                         >
-                            <Typography id={item?.summary?.id}>{item?.summary?.text}</Typography>
+                            <Typography id={item?.summary?.id} dangerouslySetInnerHTML={{ __html: item?.summary?.text }} />
                         </AccordionSummary>
                     }
                     {
@@ -72,9 +72,7 @@ const Accordion: React.FC<AccordionProps> = (props) => {
                         <AccordionDetails
                             className={'Accordion--details'}
                         >
-                            <Typography id={item?.details?.id}>
-                                {item?.details?.text}
-                            </Typography>
+                            <Typography id={item?.details?.id} dangerouslySetInnerHTML={{ __html: item?.details?.text }} />
                         </AccordionDetails>
                     }
                 </AccordionMUI>

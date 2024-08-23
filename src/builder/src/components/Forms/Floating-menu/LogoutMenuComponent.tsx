@@ -15,7 +15,7 @@ const LogoutMenuComponent:React.FC = () => {
     return <>
         <Fab color="error" variant="extended" onClick={handleLogout}>
             <LogoutIcon sx={{mr:1}} />
-            <span>Log Out</span>
+            <span>LogOut</span>
         </Fab>
     </>
 }

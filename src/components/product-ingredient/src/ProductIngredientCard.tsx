@@ -106,9 +106,8 @@ const ProductIngredientCard: React.FunctionComponent<ProductIngredientCardProps>
                       className={'product-ingredient-card-heading-title'}
                       variant={`h${headingLevel}`}
                       id={title?.id}
-                  >
-                    {title?.text}
-                  </Typography>
+                      dangerouslySetInnerHTML={{ __html: title?.text }}
+                  />
                 </Box>
             )}
 
@@ -122,9 +121,8 @@ const ProductIngredientCard: React.FunctionComponent<ProductIngredientCardProps>
                               paragraph={true}
                               className={''}
                               id={description?.id}
-                          >
-                            {description?.text}
-                          </Typography>
+                              dangerouslySetInnerHTML={{ __html: description?.text }}
+                          />
                       ))
                   }
                   <List>
@@ -135,11 +133,10 @@ const ProductIngredientCard: React.FunctionComponent<ProductIngredientCardProps>
                             <ListItemIcon className={'product-ingredient-card_Icon-container'}>
                               <AcUnitIcon className={'product-ingredient-card_listIcon'} />
                             </ListItemIcon>
-                            <ListItemText
-                                primary={item?.text}
-                                primaryTypographyProps={{
-                                  id:item?.id
-                                }}
+                            <Typography
+                                component="span"
+                                id={item?.id}
+                                dangerouslySetInnerHTML={{ __html: item?.text }}
                             />
                           </ListItem>
                       ))

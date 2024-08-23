@@ -32,8 +32,9 @@ const ContextMenu: React.FC<ContextMenuProps> = (props) => {
 
     const handleContextMenu = (event) => {
         event.preventDefault();
-        const targetElement:HTMLElement = event.target;
-        if(tags?.includes(targetElement?.tagName) && ![undefined,'',null].includes(targetElement?.id)) {
+        let targetElement:HTMLElement = event.target;
+        if(!targetElement.id) targetElement = targetElement.parentElement
+        if(tags?.includes(targetElement?.tagName as HTMLTags) && ![undefined,'',null].includes(targetElement?.id)) {
             setContextMenu(
                 contextMenu === null
                     ? {

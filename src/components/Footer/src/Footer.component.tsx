@@ -85,9 +85,12 @@ const Footer: React.FC<FooterProps> = (props) => {
                     }
                     {
                         copywrightText &&
-                        <Typography paragraph={true} className={'Footer--copyright'} id={copywrightText?.id || ''}>
-                            {copywrightText?.text}
-                        </Typography>
+                        <Typography
+                            paragraph={true}
+                            className={'Footer--copyright'}
+                            id={copywrightText?.id || ''}
+                            dangerouslySetInnerHTML={{ __html: copywrightText?.text }}
+                        />
                     }
 
                 </Box>

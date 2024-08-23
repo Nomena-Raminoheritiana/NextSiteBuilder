@@ -18,9 +18,8 @@ const SmallTitle: React.FC<SmallTitleProps> = ({
         className={`SmallTitle priority ${className}`}
         data-component-name={'SmallTitle'}
         id={id}
-    >
-        {children}
-    </Typography>
+        dangerouslySetInnerHTML={{ __html: children }}
+    />
 )
 
 export default SmallTitle

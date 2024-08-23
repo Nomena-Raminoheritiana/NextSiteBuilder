@@ -10,9 +10,9 @@ import ValidateTokenFromLS from "@/builder/src/services/authentication/ValidateT
 import {setTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 import BuilderContext, {BuilderContextInterface} from "@/builder/src/Contexts/Builder.context";
 import '@/builder/styles/_hoverElements.scss';
-import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/ThemeSelectorMenuComponent";
+import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/Floating-menu/ThemeSelectorMenuComponent";
 import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.interface";
-import LogoutMenuComponent from "@/builder/src/components/Forms/LogoutMenuComponent";
+import LogoutMenuComponent from "@/builder/src/components/Forms/Floating-menu/LogoutMenuComponent";
 
 
 interface BuilderProps {

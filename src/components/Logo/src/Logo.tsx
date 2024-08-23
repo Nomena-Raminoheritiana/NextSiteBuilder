@@ -21,9 +21,13 @@ const Logo = ({
         data-component-name={'Logo'}
     >
         <Image sx={imageSx || {}} {...image} className={'logo-image'} />
-        <Typography id={text?.id} variant="h6" className={'logo-text'} sx={{...{my: 'auto', fontWeight:'bold', fontFamily:'Roboto'}, ...textSx}}>
-            {text?.text}
-        </Typography>
+        <Typography
+            id={text?.id}
+            variant="h6"
+            className={'logo-text'}
+            sx={{...{my: 'auto', fontWeight:'bold', fontFamily:'Roboto'}, ...textSx}}
+            dangerouslySetInnerHTML={{ __html: text?.text }}
+        />
     </Box>
   );
 };
