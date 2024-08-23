@@ -29,7 +29,9 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
         if(modelId && apiConfig && availableThemes?.themes?.length>0) {
             const saved = await saveModelTheme(modelId, apiConfig, themeChecked);
             saved && setThemeUsed && setThemeUsed(themeChecked)
+            return saved;
         }
+        return false
     }
 
     const handleCancel = (e) => {
