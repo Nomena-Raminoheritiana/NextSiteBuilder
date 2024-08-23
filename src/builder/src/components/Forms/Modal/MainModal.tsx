@@ -12,7 +12,7 @@ const modalStyle = {
     maxHeight: '90vh',
     backgroundColor: '#ffffff',
     boxShadow: 24,
-    p: 4,
+    py:4,
     zIndex:9999
 };
 
@@ -90,11 +90,12 @@ const MainModal:React.FC<MainModalProps> = (props) => {
                     <Suspense fallback={'loading...'}>
                         <Box sx={{
                             overflow: 'auto',
-                            maxHeight: '80vh'
+                            maxHeight: '80vh',
+                            px: 4
                         }}>
                             {children}
                         </Box>
-                        <Box mt={3} sx={{display:'flex', justifyContent:'flex-end'}}>
+                        <Box mt={3} sx={{display:'flex', justifyContent:'flex-end',  px: 4}}>
                             <Button
                                 onClick={handleSaveClick}
                                 variant="contained"

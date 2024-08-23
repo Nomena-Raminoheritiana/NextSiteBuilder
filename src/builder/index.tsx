@@ -13,6 +13,7 @@ import '@/builder/styles/_hoverElements.scss';
 import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/Floating-menu/ThemeSelectorMenuComponent";
 import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.interface";
 import LogoutMenuComponent from "@/builder/src/components/Forms/Floating-menu/LogoutMenuComponent";
+import MainFloatingMenuComponent from "@/builder/src/components/Forms/Floating-menu/MainFloatingMenu.component";
 
 
 interface BuilderProps {
@@ -65,10 +66,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
             <BuilderContext.Provider value={builderContextValue}>
                 <Box className={"builder-container"}>
                     <HoverImageBorderMemo />
-                    <Box sx={{ position: 'fixed', bottom: 16, right: 16, zIndex: 9999 , display:'flex', gap:2}}>
-                        <ThemeSelectorMenuComponent />
-                        <LogoutMenuComponent />
-                    </Box>
+                    <MainFloatingMenuComponent />
                     {MainContextMenuMemo}
                 </Box>
                 <Box className={"builder-children"}>
