@@ -41,6 +41,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
     const [themeUsed, setThemeUsed] = useState<string | null>(themeNameUsed)
     const [token, setToken] = useState<string | null>(null);
     const [globalView, setGlobalView] = useState<boolean>(false);
+    const [globalViewZoom, setGlobalViewZoom] = useState<number>(0.3);
     const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
     const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
     const builderContextValue:BuilderContextInterface = {
@@ -70,12 +71,15 @@ const Builder:React.FC<BuilderProps> = (props) => {
                     <MainFloatingMenuComponent>
                         <GlobalViewModeComponent
                             globalViewState={globalView}
-                            onClick={() => { setGlobalView(!globalView); window.scrollTo({top: 0}) }}
+                            scaleMod={globalViewZoom}
+                            onClick={() => setGlobalView(!globalView) }
+                            onClickZoomIn={() => setGlobalViewZoom(Math.min(globalViewZoom + 0.1, 1))}
+                            onClickZoomOut={() => setGlobalViewZoom(Math.max(globalViewZoom - 0.1, 0.1))}
                         />
                     </MainFloatingMenuComponent>
                     {MainContextMenuMemo}
                 </Box>
-                <GlobalViewModeDisplay $globalView={globalView} >
+                <GlobalViewModeDisplay $globalView={globalView} $zoom={globalViewZoom} >
                     <Box className={"builder-children"}>
                         {children}
                     </Box>
@@ -95,14 +99,14 @@ const Builder:React.FC<BuilderProps> = (props) => {
     </>
 }
 
-const GlobalViewModeDisplay = styled.div<{ $globalView?: boolean }>`
+const GlobalViewModeDisplay = styled.div<{ $globalView?: boolean, $zoom?:number }>`
   ${props =>
           props.$globalView &&
           `
     margin: 0 auto;
     border: 1px solid #ccc;
     transition: width 0.3s ease;
-    transform: scale(0.3);
+    transform: scale(${props.$zoom || 1});
     transform-origin: top center;
   `}
 `;
