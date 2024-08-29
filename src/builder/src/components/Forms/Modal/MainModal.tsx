@@ -3,6 +3,8 @@ import {Alert, Backdrop, Box, Button, Fade, Modal, Snackbar} from "@mui/material
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import {SxProps} from "@mui/system";
+import useIsMobile from "@/Hooks/useIsMobile.hook";
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -13,43 +15,78 @@ const modalStyle = {
     backgroundColor: '#ffffff',
     boxShadow: 24,
     py:4,
-    zIndex:9999
+    zIndex:9999,
+    width: {
+        xs: '95vw',
+        md: 'auto'
+    }
 };
 
 interface MainModalProps {
-    handleMainButtonClick: (e:React.MouseEvent) => Promise<boolean>;
+    handleMainButtonClick?: (e:React.MouseEvent) => Promise<boolean>;
     handleCancel?: (e:React.MouseEvent) => void;
     mainButtonLabel?: string | null | ReactElement | ReactElement[];
     cancelButtonLabel?: string | null;
+    mainButtonProps?: {
+      display?:boolean;
+      sx?: SxProps
+    };
+    cancelButtonProps?: {
+        refresh?:boolean;
+        display?:boolean;
+        sx?: SxProps
+    }
     children : ReactElement | ReactElement[]
+}
+
+const defaultCancelButtonProps = {
+    display:true,
+    sx:{},
+    refresh: false
+}
+
+const defaultMainButtonProps = {
+    display:true,
+    sx:{}
 }
 
 const MainModal:React.FC<MainModalProps> = (props) => {
     const {
         handleMainButtonClick,
         handleCancel,
+        mainButtonProps = defaultMainButtonProps,
         mainButtonLabel,
         cancelButtonLabel,
+        cancelButtonProps = defaultCancelButtonProps,
         children
     } = props
+
+    const mainButtonPropsMixed = {...defaultMainButtonProps, ...mainButtonProps}
+    const cancelButtonPropsMixed = {...defaultCancelButtonProps, ...cancelButtonProps}
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = React.useState(false);
     const [openErrorSnackBar, setOpenErrorSnackBar] = React.useState(false);
     const [loading, setLoading] =  useState<boolean>(false);
+    const isMobile = useIsMobile()
     const handleSaveClick = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const processed = await handleMainButtonClick(e);
+        if(handleMainButtonClick) {
+            const processed = await handleMainButtonClick(e);
+            processed ? setOpenSuccessSnackBar(true) : setOpenErrorSnackBar(true)
+        }
         setIsModalOpen(false);
-        processed ? setOpenSuccessSnackBar(true) : setOpenErrorSnackBar(true)
     }
 
     const handleCancelClick = (e) => {
         e.preventDefault();
         setIsModalOpen(false);
         if (handleCancel) {
-            handleCancel(e)
+            handleCancel(e);
+        }
+        if(cancelButtonPropsMixed?.refresh) {
+            window.location.reload()
         }
     }
 
@@ -96,26 +133,36 @@ const MainModal:React.FC<MainModalProps> = (props) => {
                             {children}
                         </Box>
                         <Box mt={3} sx={{display:'flex', justifyContent:'flex-end',  px: 4}}>
-                            <Button
-                                onClick={handleSaveClick}
-                                variant="contained"
-                            >
-                                { loading ?  <>
-                                    <HourglassTopIcon />
-                                    LOADING...
-                                </> : mainButtonLabel || <><SaveIcon sx={{mr:1}} /> Save and close</> }
-                            </Button>
-                            <Button
-                                onClick={handleCancelClick}
-                                variant="contained"
-                                color={"error"}
-                                sx={{
-                                    backgroundColor:"#dc3545",
-                                    ml: 2
-                                }}
-                            >
-                                {cancelButtonLabel || <><CancelIcon sx={{mr:1}}/> Cancel</>}
-                            </Button>
+                            {
+                                mainButtonPropsMixed?.display &&
+                                <Button
+                                    onClick={handleSaveClick}
+                                    variant="contained"
+                                    sx={mainButtonPropsMixed.sx}
+                                >
+                                    { loading ?  <>
+                                        <HourglassTopIcon />
+                                        LOADING...
+                                    </> : mainButtonLabel || <><SaveIcon sx={{mr:isMobile?0:1}} /> {isMobile ? '' : 'Save and close'}</> }
+                                </Button>
+                            }
+
+                            {
+                                cancelButtonPropsMixed?.display &&
+                                <Button
+                                    onClick={handleCancelClick}
+                                    variant="contained"
+                                    color={"error"}
+                                    sx={{
+                                        backgroundColor:"#dc3545",
+                                        ml: 2,
+                                        ...cancelButtonPropsMixed.sx
+                                    }}
+                                >
+                                    {cancelButtonLabel || <><CancelIcon sx={{mr:isMobile?0:1}}/> {isMobile ? '' : 'Cancel'}</>}
+                                </Button>
+                            }
+
                         </Box>
                     </Suspense>
                 </Box>

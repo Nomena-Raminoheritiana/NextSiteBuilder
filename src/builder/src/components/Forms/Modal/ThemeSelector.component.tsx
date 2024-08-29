@@ -103,7 +103,9 @@ const StyledWrapper = styled.div<{ className?: string }>`
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      width: calc(4 * 300px + 3 * 10px);
+      @media (min-width: 992px) {
+        width: calc(4 * 300px + 3 * 10px);
+      }
 
       .site-preview-sub-container {
         display: flex;

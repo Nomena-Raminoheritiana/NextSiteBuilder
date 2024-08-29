@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import useIsMobile from "@/Hooks/useIsMobile.hook";
 
 interface ViewModeInterface {
     globalViewState:boolean;
@@ -16,6 +17,7 @@ const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
     const {globalViewState,onClickZoomOut,onClickZoomIn,onClick} = props;
     const zoomInRef = useRef()
     const zoomOutRef = useRef()
+    const isMobile = useIsMobile()
 
     const handleClick = (e) => {
         if(onClick && typeof  onClick === 'function') {
@@ -37,8 +39,8 @@ const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
 
     return <>
         <Fab color="success" variant="extended" onClick={handleClick}>
-            { !globalViewState ? <VisibilityIcon sx={{mr:1}} /> : <VisibilityOffIcon sx={{mr:1}} />}
-            <span>{ !globalViewState ? 'Global view' : 'Normal view' }</span>
+            { !globalViewState ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            {!isMobile && <span style={{marginLeft:'5px'}}>{ !globalViewState ? 'Global view' : 'Normal view' }</span>}
         </Fab>
         {
             globalViewState &&

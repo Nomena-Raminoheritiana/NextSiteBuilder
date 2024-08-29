@@ -175,7 +175,11 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         >
             <StyledWrapper>
                 <Typography variant={'h6'} sx={{mb:2}}>Modify image</Typography>
-                <Grid container spacing={2} sx={{width:{xs:'95vw', md:'80vw'}}}>
+                <Grid container spacing={2} sx={{
+                    width: { xs: '95vw', md: '80vw' },
+                    transform: { xs: 'scale(0.85)', md: 'scale(1)' },
+                    transformOrigin: { xs: 'top left' }
+                }}>
                     <Grid item xs={12} md={6}>
                         {
                             image?.url &&

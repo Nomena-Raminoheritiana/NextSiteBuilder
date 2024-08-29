@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import getElementInfo, {ElementInfo} from "@/builder/src/Utils/HTML/getElementInfo";
 import {Box} from "@mui/material";
+import useIsMobile from "@/Hooks/useIsMobile.hook";
 
 const defaultCursorElementInfoProps = {
     top: 0,
@@ -18,6 +19,7 @@ const defaultCursorElementInfoProps = {
 
 const HoverImageBorder = () => {
     const [cursorElementInfo, setCursorElementInfo] = useState<ElementInfo>(defaultCursorElementInfoProps);
+    const isMobile = useIsMobile()
     useEffect(() => {
         const interval = setInterval(() => {
             const imageElements = document.querySelectorAll('.builder-children img');
@@ -29,7 +31,7 @@ const HoverImageBorder = () => {
                        if(imageInfo != null) {
                            setCursorElementInfo({
                                ...cursorElementInfo,
-                               top: imageInfo.top +  window.scrollY,
+                               top: isMobile ? imageInfo.top +  window.scrollY - 42 : imageInfo.top +  window.scrollY,
                                left: imageInfo.left + window.scrollX,
                                width: imageInfo.width - 1,
                                height: imageInfo.height,
