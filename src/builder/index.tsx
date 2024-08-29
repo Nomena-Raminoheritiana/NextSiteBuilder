@@ -10,10 +10,10 @@ import ValidateTokenFromLS from "@/builder/src/services/authentication/ValidateT
 import {setTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS";
 import BuilderContext, {BuilderContextInterface} from "@/builder/src/Contexts/Builder.context";
 import '@/builder/styles/_hoverElements.scss';
-import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/Floating-menu/ThemeSelectorMenuComponent";
 import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.interface";
-import LogoutMenuComponent from "@/builder/src/components/Forms/Floating-menu/LogoutMenuComponent";
 import MainFloatingMenuComponent from "@/builder/src/components/Forms/Floating-menu/MainFloatingMenu.component";
+import GlobalViewModeComponent from "@/builder/src/components/Forms/Floating-menu/GlobalViewMode.component";
+import styled from "styled-components";
 
 
 interface BuilderProps {
@@ -40,6 +40,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
     const [pageProps, setPageProps] = useState(data)
     const [themeUsed, setThemeUsed] = useState<string | null>(themeNameUsed)
     const [token, setToken] = useState<string | null>(null);
+    const [globalView, setGlobalView] = useState<boolean>(false);
     const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
     const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
     const builderContextValue:BuilderContextInterface = {
@@ -66,12 +67,19 @@ const Builder:React.FC<BuilderProps> = (props) => {
             <BuilderContext.Provider value={builderContextValue}>
                 <Box className={"builder-container"}>
                     <HoverImageBorderMemo />
-                    <MainFloatingMenuComponent />
+                    <MainFloatingMenuComponent>
+                        <GlobalViewModeComponent
+                            globalViewState={globalView}
+                            onClick={() => { setGlobalView(!globalView); window.scrollTo({top: 0}) }}
+                        />
+                    </MainFloatingMenuComponent>
                     {MainContextMenuMemo}
                 </Box>
-                <Box className={"builder-children"}>
-                    {children}
-                </Box>
+                <GlobalViewModeDisplay $globalView={globalView} >
+                    <Box className={"builder-children"}>
+                        {children}
+                    </Box>
+                </GlobalViewModeDisplay>
             </BuilderContext.Provider>
         </>
     }
@@ -87,4 +95,16 @@ const Builder:React.FC<BuilderProps> = (props) => {
     </>
 }
 
-export default Builder
+const GlobalViewModeDisplay = styled.div<{ $globalView?: boolean }>`
+  ${props =>
+          props.$globalView &&
+          `
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    transition: width 0.3s ease;
+    transform: scale(0.3);
+    transform-origin: top center;
+  `}
+`;
+
+export default Builder;
