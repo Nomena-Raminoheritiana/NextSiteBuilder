@@ -1,15 +1,28 @@
 import LocalStorageKey from "@/builder/src/data/LocalStorage/LocalStorageKey.json"
 
 export function setTokenFromLS(token: string) {
-    window.localStorage.setItem(getUserTokenKey(), token)
+    try {
+        window.localStorage.setItem(getUserTokenKey(), token)
+    } catch(e) {
+        return null
+    }
 }
 
 export function getTokenFromLS() {
-    return window.localStorage.getItem(getUserTokenKey())
+    try {
+        return window.localStorage.getItem(getUserTokenKey())
+    } catch(e) {
+        return null
+    }
 }
 
 export function removeTokenFromLS() {
-    window.localStorage.removeItem(getUserTokenKey())
+    try{
+        window.localStorage.removeItem(getUserTokenKey())
+    } catch(e) {
+        return null
+    }
+
 }
 
 export function getUserTokenKey() {

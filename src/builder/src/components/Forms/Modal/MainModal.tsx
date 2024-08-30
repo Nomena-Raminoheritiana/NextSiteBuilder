@@ -23,19 +23,23 @@ const modalStyle = {
 };
 
 interface MainModalProps {
-    handleMainButtonClick?: (e:React.MouseEvent) => Promise<boolean>;
+    handleMainButtonClick?: (e:React.MouseEvent) => Promise<boolean> | void;
     handleCancel?: (e:React.MouseEvent) => void;
     mainButtonLabel?: string | null | ReactElement | ReactElement[];
     cancelButtonLabel?: string | null;
     mainButtonProps?: {
       display?:boolean;
-      sx?: SxProps
+      sx?: SxProps;
+      closeAfterClick?:boolean;
+      refresh?:boolean;
+      verifyResponseAfterClick?:boolean;
     };
     cancelButtonProps?: {
         refresh?:boolean;
         display?:boolean;
         sx?: SxProps
-    }
+    };
+    injectMoreButtons?: () => ReactElement
     children : ReactElement | ReactElement[]
 }
 
@@ -47,7 +51,10 @@ const defaultCancelButtonProps = {
 
 const defaultMainButtonProps = {
     display:true,
-    sx:{}
+    sx:{},
+    closeAfterClick:true,
+    refresh: false,
+    verifyResponseAfterClick: true
 }
 
 const MainModal:React.FC<MainModalProps> = (props) => {
@@ -58,6 +65,7 @@ const MainModal:React.FC<MainModalProps> = (props) => {
         mainButtonLabel,
         cancelButtonLabel,
         cancelButtonProps = defaultCancelButtonProps,
+        injectMoreButtons,
         children
     } = props
 
@@ -74,9 +82,13 @@ const MainModal:React.FC<MainModalProps> = (props) => {
         setLoading(true);
         if(handleMainButtonClick) {
             const processed = await handleMainButtonClick(e);
-            processed ? setOpenSuccessSnackBar(true) : setOpenErrorSnackBar(true)
+            mainButtonPropsMixed?.verifyResponseAfterClick && (
+                processed ? setOpenSuccessSnackBar(true) : setOpenErrorSnackBar(true)
+            )
         }
-        setIsModalOpen(false);
+        setLoading(false);
+        mainButtonPropsMixed?.closeAfterClick && setIsModalOpen(false);
+        mainButtonPropsMixed?.refresh && window.location.reload();
     }
 
     const handleCancelClick = (e) => {
@@ -146,7 +158,9 @@ const MainModal:React.FC<MainModalProps> = (props) => {
                                     </> : mainButtonLabel || <><SaveIcon sx={{mr:isMobile?0:1}} /> {isMobile ? '' : 'Save and close'}</> }
                                 </Button>
                             }
-
+                            {
+                                injectMoreButtons ? injectMoreButtons() : ''
+                            }
                             {
                                 cancelButtonPropsMixed?.display &&
                                 <Button
