@@ -38,7 +38,7 @@ const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
     }
 
     return <>
-        <Fab color="success" variant="extended" onClick={handleClick}>
+        <Fab color="primary" variant="extended" onClick={handleClick}>
             { !globalViewState ? <VisibilityIcon /> : <VisibilityOffIcon />}
             {!isMobile && <span style={{marginLeft:'5px'}}>{ !globalViewState ? 'Global view' : 'Normal view' }</span>}
         </Fab>
