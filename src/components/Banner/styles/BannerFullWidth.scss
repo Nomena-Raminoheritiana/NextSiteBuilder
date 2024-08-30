@@ -33,7 +33,8 @@
       display:flex;
       flex-direction: column;
       align-items: center;
-      background: rgba(255,255,255, 0.8);
+      background: rgba(237,237,237, 0.7);
+      backdrop-filter: blur(5px);
       padding-bottom: 50px;
       padding-top: 50px;
       @media (min-width: $breakpoint-md) {
