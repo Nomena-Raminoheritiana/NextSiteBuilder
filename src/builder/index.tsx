@@ -42,7 +42,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
     const [token, setToken] = useState<string | null>(null);
     const [globalView, setGlobalView] = useState<boolean>(false);
     const [globalViewZoom, setGlobalViewZoom] = useState<number>(0.3);
-    const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/HoverElement/HoverImageBorder'), {ssr: false}), [])
+    const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/Images/HoverImageBorder'), {ssr: false}), [])
     const MainContextMenuMemo = useMemo(() => <MainContextMenu />,[])
     const builderContextValue:BuilderContextInterface = {
         pageProps,
