@@ -9,7 +9,7 @@ const MobileViewMenuComponent:React.FC = () => {
     return <>
         <Fab color="primary" variant="extended" onClick={() => setDisplayModal((value) => value+1  )}>
             <PhoneAndroidIcon sx={{mr:1}} />
-            <span>Mobile mod</span>
+            <span>Mobile mode</span>
         </Fab>
         {
             displayModal>0 && <MobileViewComponent key={displayModal} />

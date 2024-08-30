@@ -36,10 +36,10 @@ const MobileViewComponent: React.FC<ThemeSelectorComponentInterface> = () => {
             <MainModal
                 mainButtonLabel={viewOnly ?
                     <>
-                        <BuildIcon /> <span style={{ marginLeft: '8px' }}>Builder mod</span>
+                        <BuildIcon /> <span style={{ marginLeft: '8px' }}>Switch to Builder mode</span>
                     </> :
                     <>
-                        <PreviewIcon /> <span style={{ marginLeft: '8px' }}>View only</span>
+                        <PreviewIcon /> <span style={{ marginLeft: '8px' }}>Switch to View only</span>
                     </>
                 }
                 handleMainButtonClick={handleClick}
