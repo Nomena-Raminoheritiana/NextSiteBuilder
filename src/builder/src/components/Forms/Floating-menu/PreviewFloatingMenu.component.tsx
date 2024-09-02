@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {createPortal} from "react-dom";
 import GlobalViewModeComponent from "@/builder/src/components/Forms/CustomButton/GlobalViewMode.component";
-import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
+import CancelIcon from '@mui/icons-material/Cancel';
 import {Box, Fab} from "@mui/material";
 import useIsMobile from "@/Hooks/useIsMobile.hook";
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
@@ -71,7 +71,7 @@ const PreviewFloatingMenuComponent:React.FC<PreviewFloatingMenuInterface> = (pro
                         sx={restoreButtonStyle}
                         onClick={handleCloseClick}
                     >
-                        <SettingsBackupRestoreIcon sx={{mr:isMobile?0:1}}/> {isMobile ? '' : 'Restore'}
+                        <CancelIcon sx={{mr:isMobile?0:1}}/> {isMobile ? '' : 'Close'}
                     </Fab>
                     <GlobalViewModeComponent
                         sx={globalViewButtonStyle}
