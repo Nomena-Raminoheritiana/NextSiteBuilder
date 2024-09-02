@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import {createPortal} from "react-dom";
 import GlobalViewModeComponent from "@/builder/src/components/Forms/CustomButton/GlobalViewMode.component";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
@@ -38,6 +38,7 @@ const globalViewButtonStyle = {
 const PreviewFloatingMenuComponent:React.FC<PreviewFloatingMenuInterface> = (props) => {
     const {handleClose, show=false} = props
     const isMobile = useIsMobile();
+    const container = useRef();
     const {globalViewState, globalViewZoom, setGlobalViewState, setGlobalViewZoom} = useContext(BuilderContext);
     const handleCloseClick = (e:React.MouseEvent) => {
         if(handleClose) {
@@ -45,10 +46,25 @@ const PreviewFloatingMenuComponent:React.FC<PreviewFloatingMenuInterface> = (pro
         }
     }
 
+    useEffect(() => {
+        if (container.current) {
+            const handleWheel = (event: WheelEvent) => {
+                event.preventDefault();
+                const scrollAmount = event.deltaY;
+                window.scrollTo({top: (window.scrollY + scrollAmount), behavior:'instant'})
+            };
+            const containerElement = container.current as HTMLElement
+            containerElement.addEventListener('wheel', handleWheel);
+            return () => {
+                containerElement.removeEventListener('wheel', handleWheel);
+            };
+        }
+    }, [show])
+
     return <>
         {
             show && createPortal(
-                <Box sx={restoreButtonContainerStyle}>
+                <Box ref={container} sx={restoreButtonContainerStyle}>
                     <Fab
                         color="primary"
                         variant="extended"
