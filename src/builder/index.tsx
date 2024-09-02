@@ -12,7 +12,7 @@ import BuilderContext, {BuilderContextInterface} from "@/builder/src/Contexts/Bu
 import '@/builder/styles/_hoverElements.scss';
 import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.interface";
 import MainFloatingMenuComponent from "@/builder/src/components/Forms/Floating-menu/MainFloatingMenu.component";
-import GlobalViewModeComponent from "@/builder/src/components/Forms/Floating-menu/GlobalViewMode.component";
+import GlobalViewModeComponent from "@/builder/src/components/Forms/CustomButton/GlobalViewMode.component";
 import styled from "styled-components";
 
 
@@ -52,7 +52,11 @@ const Builder:React.FC<BuilderProps> = (props) => {
         token,
         availableThemes,
         themeUsed,
-        setThemeUsed
+        setThemeUsed,
+        globalViewState: globalView,
+        setGlobalViewState: setGlobalView,
+        globalViewZoom,
+        setGlobalViewZoom
     }
 
     useEffect(() => {

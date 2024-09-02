@@ -1,12 +1,13 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useRef} from 'react'
 import {Button, Fab} from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import useIsMobile from "@/Hooks/useIsMobile.hook";
+import sxProps from "@/interfaces/sx.interface";
 
-interface ViewModeInterface {
+interface ViewModeInterface extends sxProps {
     globalViewState:boolean;
     onClick?: (e:React.MouseEvent) => void;
     onClickZoomIn?: (e:React.MouseEvent) => void;
@@ -14,7 +15,7 @@ interface ViewModeInterface {
 }
 
 const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
-    const {globalViewState,onClickZoomOut,onClickZoomIn,onClick} = props;
+    const {globalViewState,onClickZoomOut,onClickZoomIn,onClick, sx} = props;
     const zoomInRef = useRef()
     const zoomOutRef = useRef()
     const isMobile = useIsMobile()
@@ -38,7 +39,7 @@ const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
     }
 
     return <>
-        <Fab color="primary" variant="extended" onClick={handleClick}>
+        <Fab color="primary" variant="extended" onClick={handleClick} sx={sx}>
             { !globalViewState ? <VisibilityIcon /> : <VisibilityOffIcon />}
             {!isMobile && <span style={{marginLeft:'5px'}}>{ !globalViewState ? 'Global view' : 'Normal view' }</span>}
         </Fab>
@@ -83,7 +84,8 @@ const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
                         sx={{
                             fontSize: '50px',
                             boxShadow: '0px 0px 0px 50px rgba(255,255,255,0.7) inset',
-                            borderRadius: '5px'
+                            borderRadius: '5px',
+                            transform: 'rotateY(180deg)'
                         }}
                     />
                 </Button>

@@ -1,8 +1,8 @@
 import React, {ReactElement} from 'react'
-import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/Floating-menu/ThemeSelectorMenuComponent";
-import LogoutMenuComponent from "@/builder/src/components/Forms/Floating-menu/LogoutMenuComponent";
+import ThemeSelectorMenuComponent from "@/builder/src/components/Forms/CustomButton/ThemeSelectorMenuComponent";
+import LogoutMenuComponent from "@/builder/src/components/Forms/CustomButton/LogoutMenuComponent";
 import {Box} from "@mui/material";
-import MobileViewMenuComponent from "@/builder/src/components/Forms/Floating-menu/MobileViewMenu.component";
+import MobileViewMenuComponent from "@/builder/src/components/Forms/CustomButton/MobileViewMenu.component";
 import useIsMobile from "@/Hooks/useIsMobile.hook";
 
 interface MainFloatingMenuInterface {

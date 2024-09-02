@@ -12,6 +12,10 @@ export interface BuilderContextInterface {
     availableThemes ?: AvailableThemesInterface | null;
     themeUsed?: string | null;
     setThemeUsed?: React.Dispatch<React.SetStateAction<string | null>>;
+    globalViewState: boolean;
+    setGlobalViewState: React.Dispatch<React.SetStateAction<boolean>>;
+    globalViewZoom: number;
+    setGlobalViewZoom: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const BuilderContext = createContext<BuilderContextInterface>({
@@ -22,7 +26,11 @@ export const BuilderContext = createContext<BuilderContextInterface>({
     token: null,
     availableThemes: null,
     themeUsed: null,
-    setThemeUsed : () => {}
+    setThemeUsed : () => {},
+    globalViewState: false,
+    setGlobalViewState: () => {},
+    globalViewZoom: 0.3,
+    setGlobalViewZoom: () => {}
 });
 
 export default BuilderContext;

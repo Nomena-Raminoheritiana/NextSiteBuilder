@@ -6,6 +6,7 @@ import styled from "styled-components";
 import ImageWithLoader from "@/builder/src/components/Images/ImageWithLoader";
 import saveModelTheme from "@/builder/src/services/apiCall/model/saveModelTheme";
 import AnnouncementIcon from '@mui/icons-material/Announcement';
+import PreviewButtonComponent from "@/builder/src/components/Forms/CustomButton/PreviewButton.component";
 
 interface ThemeSelectorComponentInterface {
 }
@@ -48,6 +49,7 @@ const ThemeSelectorComponent:React.FC<ThemeSelectorComponentInterface> = () => {
         <MainModal
             handleMainButtonClick={handleSave}
             handleCancel={handleCancel}
+            injectMoreButtons={() => <PreviewButtonComponent />}
         >
             <StyledWrapper>
                 <Typography variant={'h6'}>Available Themes</Typography>

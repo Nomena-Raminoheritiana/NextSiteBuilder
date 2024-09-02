@@ -22,6 +22,7 @@ import getLocalImageUrl from "@/builder/src/Utils/Image/getLocalImageUrl";
 import uploadImage from "@/builder/src/services/apiCall/image/UploadImage";
 import deleteImage from "@/builder/src/services/apiCall/image/DeleteImage";
 import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
+import PreviewButtonComponent from "@/builder/src/components/Forms/CustomButton/PreviewButton.component";
 
 export interface ImageFormProps {
     targetHtmlElement:HTMLElement;
@@ -172,6 +173,7 @@ const ImageForm: React.FC<ImageFormProps> = (props) => {
         <MainModal
             handleMainButtonClick={handleSave}
             handleCancel={handleCancel}
+            injectMoreButtons={() => <PreviewButtonComponent />}
         >
             <StyledWrapper>
                 <Typography variant={'h6'} sx={{mb:2}}>Modify image</Typography>

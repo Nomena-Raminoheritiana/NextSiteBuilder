@@ -5,6 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {SxProps} from "@mui/system";
 import useIsMobile from "@/Hooks/useIsMobile.hook";
+import PreviewButtonComponent from "@/builder/src/components/Forms/CustomButton/PreviewButton.component";
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -135,7 +136,7 @@ const MainModal:React.FC<MainModalProps> = (props) => {
             }}
         >
             <Fade in={isModalOpen}>
-                <Box sx={modalStyle}>
+                <Box sx={modalStyle} className={'modal-container'}>
                     <Suspense fallback={'loading...'}>
                         <Box sx={{
                             overflow: 'auto',
