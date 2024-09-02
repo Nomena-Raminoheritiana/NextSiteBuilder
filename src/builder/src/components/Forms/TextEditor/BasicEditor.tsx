@@ -22,8 +22,16 @@ const BasicEditor:React.FC<BasicEditorInterface> = (
     }
 
     useEffect(() => {
-        if (editorRef.current as HTMLDivElement && !((editorRef.current as HTMLDivElement).parentElement.querySelector('.ql-toolbar'))) {
-            const QuillInstance = new Quill(editorRef.current, {
+        const editor = editorRef.current as HTMLDivElement
+        const toolbar = editor.parentElement.querySelector('.ql-toolbar');
+        const qlContainer = editor.parentElement.querySelector('.ql-container');
+        const qlEditor = editor.parentElement.querySelector('.ql-editor');
+        toolbar && toolbar.remove()
+        qlContainer && qlContainer.classList.remove('ql-container','ql-snow')
+        qlEditor && (qlContainer.innerHTML = qlEditor.innerHTML);
+
+        if (editor) {
+            const QuillInstance = new Quill(editor, {
                 theme: 'snow',
                 modules: {
                     toolbar: [
@@ -32,12 +40,13 @@ const BasicEditor:React.FC<BasicEditorInterface> = (
                 }
             });
 
-            QuillInstance.on('text-change', () => {
+            const handleTextChangeEvent = () => {
                 handleTextChange && handleTextChange(handleValue(QuillInstance.root.innerHTML))
-            });
+            }
+            QuillInstance.on('text-change', handleTextChangeEvent);
 
             // Prevent to create new line
-            QuillInstance.root.addEventListener('keydown', (event) => {
+            const handleKeyDownEvent = (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     const newLine = event.target.querySelectorAll('br, p:last-child');
@@ -55,10 +64,10 @@ const BasicEditor:React.FC<BasicEditorInterface> = (
                     }
 
                 }
-            });
-
+            }
+            QuillInstance.root.addEventListener('keydown', handleKeyDownEvent);
         }
-    }, []);
+    });
 
     return <div ref={editorRef} dangerouslySetInnerHTML={{__html: defaultValue || ''}}></div>;
 };
