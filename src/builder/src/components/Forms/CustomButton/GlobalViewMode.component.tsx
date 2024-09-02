@@ -14,6 +14,13 @@ interface ViewModeInterface extends sxProps {
     onClickZoomOut?: (e:React.MouseEvent) => void;
 }
 
+const fabStyle= {
+    padding: {
+        xs: 0,
+        md: 2
+    }
+}
+
 const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
     const {globalViewState,onClickZoomOut,onClickZoomIn,onClick, sx} = props;
     const zoomInRef = useRef()
@@ -39,7 +46,7 @@ const GlobalViewModeComponent:React.FC<ViewModeInterface> = (props) => {
     }
 
     return <>
-        <Fab color="primary" variant="extended" onClick={handleClick} sx={sx}>
+        <Fab color="primary" variant="extended" onClick={handleClick} sx={{...fabStyle, ...sx}}>
             { !globalViewState ? <VisibilityIcon /> : <VisibilityOffIcon />}
             {!isMobile && <span style={{marginLeft:'5px'}}>{ !globalViewState ? 'Global view' : 'Normal view' }</span>}
         </Fab>

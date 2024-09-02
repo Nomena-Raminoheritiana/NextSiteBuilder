@@ -23,7 +23,14 @@ const restoreButtonContainerStyle = {
 
 const restoreButtonStyle = {
     position: 'absolute',
-    top: '50vh',
+    top: {
+        xs : '52vh',
+        md : '50vh'
+    },
+    padding: {
+        xs: 0,
+        md: 2
+    },
     right: '1vw',
     zIndex: 99999
 }
@@ -32,7 +39,11 @@ const globalViewButtonStyle = {
     position: 'absolute',
     top: '42vh',
     right: '1vw',
-    zIndex: 99999
+    zIndex: 99999,
+    padding: {
+        xs: 0,
+        md: 2
+    }
 }
 
 const PreviewFloatingMenuComponent:React.FC<PreviewFloatingMenuInterface> = (props) => {
@@ -66,7 +77,7 @@ const PreviewFloatingMenuComponent:React.FC<PreviewFloatingMenuInterface> = (pro
             show && createPortal(
                 <Box ref={container} sx={restoreButtonContainerStyle}>
                     <Fab
-                        color="primary"
+                        color="error"
                         variant="extended"
                         sx={restoreButtonStyle}
                         onClick={handleCloseClick}

@@ -6,6 +6,13 @@ import {getTokenFromLS} from "@/builder/src/services/authentication/TokenFromLS"
 import BuilderContext from "@/builder/src/Contexts/Builder.context";
 import useIsMobile from "@/Hooks/useIsMobile.hook";
 
+const fabStyle= {
+    padding: {
+        xs: 0,
+        md: 2
+    }
+}
+
 const LogoutMenuComponent:React.FC = () => {
     const {apiConfig} = useContext(BuilderContext);
     const isMobile = useIsMobile()
@@ -15,7 +22,7 @@ const LogoutMenuComponent:React.FC = () => {
         window.location.reload();
     }
     return <>
-        <Fab color="error" variant="extended" onClick={handleLogout}>
+        <Fab sx={fabStyle} color="error" variant="extended" onClick={handleLogout}>
             <LogoutIcon />
             {!isMobile &&  <span style={{marginLeft:'5px'}}>LogOut</span>}
         </Fab>
