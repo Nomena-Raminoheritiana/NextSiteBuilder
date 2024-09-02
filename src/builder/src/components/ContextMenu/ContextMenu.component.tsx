@@ -83,7 +83,7 @@ const ContextMenu: React.FC<ContextMenuProps> = (props) => {
                         <DefaultMenuList
                             menuItems={menuItems}
                             handleClose={handleClose}
-                            targetHtmlElement={contextMenu?.currentElementTarget}
+                            targetHtmlElement={contextMenu.currentElementTarget}
                         />
                     </Box>
                 </>
