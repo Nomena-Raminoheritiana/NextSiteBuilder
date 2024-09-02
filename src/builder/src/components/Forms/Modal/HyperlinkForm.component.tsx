@@ -17,6 +17,7 @@ import saveModelProps from "@/builder/src/services/apiCall/model/saveModelProps"
 import updateHyperlinkById from "@/builder/src/services/setData/updateHyperlinkById";
 import getAllElementsById from "@/builder/src/Utils/HTML/getAllElementsById";
 import MainModal from "@/builder/src/components/Forms/Modal/MainModal";
+import PreviewButtonComponent from "@/builder/src/components/Forms/CustomButton/PreviewButton.component";
 
 export interface HyperlinkFormProps {
     targetHtmlElement:HTMLElement;
@@ -36,11 +37,11 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
     const inputSwitchDefaultValue = useMemo(() => {
         return targetHtmlElement?.getAttribute('target')=='_blank'
     }, [])
+    const defaultInnerHTML = useMemo(() => targetHtmlElement ? targetHtmlElement?.innerHTML : "", []);
+    const defaultUrl = useMemo(() => targetHtmlElement ? targetHtmlElement?.getAttribute('href') : "", []);
+    const defaultTarget = useMemo(() => targetHtmlElement ? targetHtmlElement?.getAttribute('target') : "", []);
 
-
-    const defaultInnerHTML = targetHtmlElement ? targetHtmlElement?.innerHTML : "";
-    const defaultUrl = targetHtmlElement ? targetHtmlElement?.getAttribute('href') : "";
-    const defaultTarget = targetHtmlElement ? targetHtmlElement?.getAttribute('target') : "";
+    const [openInNewTabState, setOpenInNewTabState] = useState<boolean>(inputSwitchDefaultValue)
 
     const handleSave = async (e) => {
         e.preventDefault();
@@ -55,7 +56,7 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
               {
                   label : inputLabelRef?.current?.value,
                   url : inputUrlRef?.current?.value,
-                  openLinkInNewTab: inputSwitchTargetRef?.current?.checked ? '_blank' : '_self'
+                  openLinkInNewTab: openInNewTabState
               }
             )
             if(updated) {
@@ -96,8 +97,10 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
 
     const handleChangeOpenInNewTab = (e:React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
+        const switchElement = e.target as HTMLInputElement
+        setOpenInNewTabState(switchElement.checked)
         getAllElementsById(targetHtmlElement?.id, (element) => {
-            element.setAttribute('target', (e.target as HTMLInputElement).checked ? '_blank' : '_self')
+            element.setAttribute('target', switchElement.checked ? '_blank' : '_self')
         })
     }
 
@@ -105,6 +108,7 @@ const HyperlinkForm: React.FC<HyperlinkFormProps> = (props) => {
         <MainModal
             handleMainButtonClick={handleSave}
             handleCancel={handleCancel}
+            injectMoreButtons={() => <PreviewButtonComponent />}
         >
             <Typography variant={'h6'} sx={{mb:2, textAlign:'left'}}>
                 Modify the Hyperlink
