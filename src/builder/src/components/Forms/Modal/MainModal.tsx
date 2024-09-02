@@ -6,6 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {SxProps} from "@mui/system";
 import useIsMobile from "@/Hooks/useIsMobile.hook";
 import PreviewButtonComponent from "@/builder/src/components/Forms/CustomButton/PreviewButton.component";
+import ToastComponent from "@/builder/src/components/Toast/Toast.component";
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -104,24 +105,17 @@ const MainModal:React.FC<MainModalProps> = (props) => {
     }
 
     return <>
-        <Snackbar open={openSuccessSnackBar} autoHideDuration={6000} onClose={() => setOpenSuccessSnackBar(false)}>
-            <Alert
-                severity="success"
-                variant="filled"
-                sx={{ width: '100%' }}
-            >
-                Your data is successfully saved
-            </Alert>
-        </Snackbar>
-        <Snackbar open={openErrorSnackBar} autoHideDuration={6000} onClose={() => setOpenErrorSnackBar(false)}>
-            <Alert
-                severity="error"
-                variant="filled"
-                sx={{ width: '100%' }}
-            >
-                Something went wrong while processing data
-            </Alert>
-        </Snackbar>
+        <ToastComponent
+            message={'Your data is successfully saved'}
+            open={openSuccessSnackBar}
+            onClose={() => setOpenSuccessSnackBar(false)}
+        />
+        <ToastComponent
+            message={'Something went wrong while processing data'}
+            severity={'error'}
+            open={openErrorSnackBar}
+            onClose={() => setOpenErrorSnackBar(false)}
+        />
         <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"

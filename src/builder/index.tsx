@@ -14,6 +14,7 @@ import AvailableThemesInterface from "@/builder/src/Interfaces/AvailableThemes.i
 import MainFloatingMenuComponent from "@/builder/src/components/Forms/Floating-menu/MainFloatingMenu.component";
 import GlobalViewModeComponent from "@/builder/src/components/Forms/CustomButton/GlobalViewMode.component";
 import styled from "styled-components";
+import ToastComponent from "@/builder/src/components/Toast/Toast.component";
 
 
 interface BuilderProps {
@@ -24,6 +25,11 @@ interface BuilderProps {
     availableThemes ?: AvailableThemesInterface | null;
     themeNameUsed ?: string | null;
     children?: ReactElement
+}
+
+interface AuthenticationDataInterface {
+    token:string | null;
+    isLoginSuccess:boolean
 }
 
 const Builder:React.FC<BuilderProps> = (props) => {
@@ -39,7 +45,10 @@ const Builder:React.FC<BuilderProps> = (props) => {
 
     const [pageProps, setPageProps] = useState(data)
     const [themeUsed, setThemeUsed] = useState<string | null>(themeNameUsed)
-    const [token, setToken] = useState<string | null>(null);
+    const [authenticationData, setAuthenticationData] = useState<AuthenticationDataInterface>({
+        token:null,
+        isLoginSuccess: false
+    });
     const [globalView, setGlobalView] = useState<boolean>(false);
     const [globalViewZoom, setGlobalViewZoom] = useState<number>(0.3);
     const HoverImageBorderMemo = useMemo(() => dynamic(() => import('@/builder/src/components/Images/HoverImageBorder'), {ssr: false}), [])
@@ -49,7 +58,7 @@ const Builder:React.FC<BuilderProps> = (props) => {
         setPageProps,
         apiConfig,
         modelId,
-        token,
+        token : authenticationData?.token,
         availableThemes,
         themeUsed,
         setThemeUsed,
@@ -62,13 +71,18 @@ const Builder:React.FC<BuilderProps> = (props) => {
     useEffect(() => {
         const validateToken = async () => {
             const validatedToken = await ValidateTokenFromLS(apiConfig);
-            typeof validatedToken == "string" && setToken(validatedToken);
+            typeof validatedToken == "string" && setAuthenticationData({...authenticationData, token:validatedToken});
         };
         validateToken();
     }, [])
 
-    if(token || manualStart) {
+    if(authenticationData?.token || manualStart) {
          return <>
+             <ToastComponent
+                 message={'User connected'}
+                 open={authenticationData.isLoginSuccess}
+                 onClose={() => setAuthenticationData({...authenticationData, isLoginSuccess:false})}
+             />
             <BuilderContext.Provider value={builderContextValue}>
                 <Box className={"builder-container"}>
                     <HoverImageBorderMemo />
@@ -94,7 +108,10 @@ const Builder:React.FC<BuilderProps> = (props) => {
 
     const onLoginSuccess = (token:string) => {
         setTokenFromLS(token);
-        setToken(token);
+        setAuthenticationData({
+            token: token,
+            isLoginSuccess: true
+        })
     }
 
     return <>
