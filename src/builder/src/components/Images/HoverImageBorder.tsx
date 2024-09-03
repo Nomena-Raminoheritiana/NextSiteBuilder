@@ -64,7 +64,7 @@ const HoverImageBorder = () => {
                top: cursorElementInfo.top,
                left: cursorElementInfo.left,
                position: 'absolute',
-               zIndex: 999999,
+               zIndex: 998,
                width: cursorElementInfo.width,
                height: cursorElementInfo.height,
                border: '2px solid aqua',
