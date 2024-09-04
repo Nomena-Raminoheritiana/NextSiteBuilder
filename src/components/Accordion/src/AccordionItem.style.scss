@@ -1,0 +1,35 @@
+.Accordion-container {
+  // increase priority
+  &.Accordion-container {
+    box-shadow: none;
+    background: transparent;
+    border: none;
+    &::before {
+      background: transparent;
+    }
+    .MuiAccordionSummary-expandIconWrapper {
+      color: white;
+      background: var(--primary-color, #1976d2);
+      border-radius: 999px;
+    }
+    .Accordion--summary {
+      padding: 0;
+      .MuiAccordionSummary-content {
+        p {
+          color : #243E63;
+          cursor : pointer;
+          display : block;
+          font-size : 20px;
+          font-weight : 600;
+          line-height : 30px;
+        }
+      }
+    }
+    .Accordion--details {
+      padding-top:0;
+      p {
+        color: #243E63;
+      }
+    }
+  }
+}
